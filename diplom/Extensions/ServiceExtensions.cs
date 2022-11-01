@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Repository;
 
 namespace diplom.Extensions
 {
@@ -32,6 +33,10 @@ namespace diplom.Extensions
             services.AddDbContext<RepositoryContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => 
                     b.MigrationsAssembly("diplom")));
+        
+        public static void ConfigureRepositoryManager(this IServiceCollection services)
+            =>
+                services.AddScoped<IRepositoryManager, RepositoryManager>();
 
     }
 }

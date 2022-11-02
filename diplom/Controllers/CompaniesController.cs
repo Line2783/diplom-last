@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace diplom.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/companies")]
     [ApiController]
     public class CompaniesController : ControllerBase
     {

@@ -22,7 +22,7 @@ namespace diplom.Controllers
         {
             _repository = repository;
             _logger = logger;
-            mapper = mapper;
+            _mapper = mapper;
         }
         [HttpGet]
         public IActionResult GetCompanies()

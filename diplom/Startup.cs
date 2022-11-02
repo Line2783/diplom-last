@@ -11,7 +11,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Contracts;
 using diplom.Extensions;
+using Entities.DataTransferObjects;
+using Entities.Models;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 
@@ -37,16 +41,18 @@ namespace diplom
             services.ConfigureSqlContext(Configuration);
             services.ConfigureRepositoryManager();
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
+            app.ConfigureExceptionHandler(logger);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
@@ -63,6 +69,16 @@ namespace diplom
             {
                 endpoints.MapControllers();
             });
+        }
+        public class MappingProfile : Profile
+        {
+            public MappingProfile()
+            {
+                CreateMap<Company, CompanyDto>()
+                    .ForMember(c => c.FullAddress,
+                        
+                opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.Http;
@@ -13,26 +15,23 @@ namespace diplom.Controllers
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
         public ClientsController(IRepositoryManager repository, ILoggerManager
-            logger)
+            logger,  IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
         [HttpGet]
         public IActionResult GetClients()
         {
             try
             {
-                var companies = _repository.Client.GetAllClients(trackChanges:
+                var clients = _repository.Client.GetAllClients(trackChanges:
                     false);
-                var companiesDto = companies.Select(c => new ClientDto
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    AddressAge = string.Join(' ', c.Address, c.Age)
-                }).ToList();
-                return Ok(companiesDto);
+                var clientsDto = _mapper.Map<IEnumerable<ClientDto>>(clients);
+                return Ok(clientsDto);
             }
             catch (Exception ex)
             {

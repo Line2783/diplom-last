@@ -8,5 +8,6 @@ namespace Contracts
     {
         IEnumerable<Client> GetAllClients(bool trackChanges);
         Client GetClient(Guid clientId, bool trackChanges);
+        void CreateClient(Client client);
     }
 }

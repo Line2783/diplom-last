@@ -35,7 +35,7 @@ namespace diplom.Controllers
             }
             
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "CompanyById")]
         public IActionResult GetClient(Guid id)
         {
             var client = _repository.Client.GetClient(id, trackChanges: false);

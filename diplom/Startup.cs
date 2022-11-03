@@ -40,8 +40,13 @@ namespace diplom
             services.ConfigureLoggerService();
             services.ConfigureSqlContext(Configuration);
             services.ConfigureRepositoryManager();
-            services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
+            services.AddControllers(config => { 
+                    config.RespectBrowserAcceptHeader = true;
+                    config.ReturnHttpNotAcceptable = true;
+                })
+                .AddXmlDataContractSerializerFormatters()
+                .AddCustomCSVFormatter();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,6 +83,11 @@ namespace diplom
                     .ForMember(c => c.FullAddress,
                         
                 opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
+                CreateMap<Employee, EmployeeDto>();
+                CreateMap<CompanyForCreationDto, Company>();
+                CreateMap<EmployeeForCreationDto, Employee>();
+
+
             }
         }
     }

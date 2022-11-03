@@ -24,7 +24,7 @@ namespace diplom.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet]
+        
         [HttpGet("{id}", Name = "GetEmployeeForCompany")] 
 
         public IActionResult GetEmployeeForCompany(Guid companyId, Guid id)

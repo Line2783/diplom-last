@@ -125,5 +125,24 @@ namespace diplom.Controllers
             _repository.Save();
             return NoContent();
         }
+        [HttpPut("{id}")]
+        public IActionResult UpdateClient(Guid id, [FromBody] ClientForUpdateDto
+            client)
+        {
+            if (client == null)
+            {
+                _logger.LogError("ClientForUpdateDto object sent from client is null.");
+                return BadRequest("ClientForUpdateDto object is null");
+            }
+            var clientEntity = _repository.Client.GetClient(id, trackChanges: true);
+            if (clientEntity == null)
+            {
+                _logger.LogInfo($"Client with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            _mapper.Map(client, clientEntity);
+            _repository.Save();
+            return NoContent();
+        }
     }
 }

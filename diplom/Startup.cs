@@ -102,6 +102,12 @@ namespace diplom
                 CreateMap<ClientForCreationDto, Client>();
                 CreateMap<OrderForCreationDto, Order>();
                 CreateMap<OrderForUpdateDto, Order>();
+                CreateMap<ClientForUpdateDto, Client>();
+                CreateMap<OrderForUpdateDto, Order>(); 
+                CreateMap<OrderForUpdateDto, Order>().ReverseMap(); 
+
+
+
 
 
 

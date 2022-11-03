@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Entities.Models;
 
 namespace Contracts
@@ -6,5 +7,6 @@ namespace Contracts
     public interface IClientRepository
     {
         IEnumerable<Client> GetAllClients(bool trackChanges);
+        Client GetClient(Guid clientId, bool trackChanges);
     }
 }

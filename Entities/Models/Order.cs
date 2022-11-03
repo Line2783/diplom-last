@@ -19,5 +19,6 @@ namespace Entities.Models
         [ForeignKey(nameof(Order))]
         public Guid ClientId { get; set; }
         public Client Client { get; set; }
+        
     }
 }

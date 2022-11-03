@@ -91,6 +91,7 @@ namespace diplom
                     .ForMember(c => c.AddressAge,
                         
                 opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Age)));
+                CreateMap<Order, OrderDto>();
 
             }
         }

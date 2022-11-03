@@ -35,5 +35,20 @@ namespace diplom.Controllers
             }
             
         }
+        [HttpGet("{id}")]
+        public IActionResult GetClient(Guid id)
+        {
+            var client = _repository.Client.GetClient(id, trackChanges: false);
+            if (client == null)
+            {
+                _logger.LogInfo($"Client with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            else
+            {
+                var clientDto = _mapper.Map<ClientDto>(client);
+                return Ok(clientDto);
+            }
+        }
     }
 }

@@ -24,5 +24,9 @@ namespace Repository
         
         public IEnumerable<Client> GetByIds(IEnumerable<Guid> ids, bool trackChanges) =>
             FindByCondition(x => ids.Contains(x.Id), trackChanges).ToList();
+        public void DeleteClient(Client client)
+        {
+            Delete(client);
+        }
     }
 }

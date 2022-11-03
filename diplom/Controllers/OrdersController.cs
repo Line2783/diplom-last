@@ -24,7 +24,8 @@ namespace diplom.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetOrderForClient")] 
+
         public IActionResult GetOrderForClient(Guid clientId, Guid id)
         {
             var client = _repository.Client.GetClient(clientId, trackChanges: false);

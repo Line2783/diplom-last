@@ -86,7 +86,11 @@ namespace diplom
                 CreateMap<Employee, EmployeeDto>();
                 CreateMap<CompanyForCreationDto, Company>();
                 CreateMap<EmployeeForCreationDto, Employee>();
-
+                
+                CreateMap<Client, ClientDto>()
+                    .ForMember(c => c.AddressAge,
+                        
+                opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Age)));
 
             }
         }

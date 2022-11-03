@@ -25,5 +25,10 @@ namespace Repository
             order.ClientId = clientId;
             Create(order);
         }
+        
+        public void DeleteOrder(Order order)
+        {
+            Delete(order);
+        }
     }
 }

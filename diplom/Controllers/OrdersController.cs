@@ -69,6 +69,54 @@ namespace diplom.Controllers
                 clientId, id = orderToReturn.Id
             }, orderToReturn);
         }
+        
+        [HttpDelete("{id}")]
+        public IActionResult DeleteOrderForClient(Guid clientId, Guid id)
+        {
+            var client = _repository.Client.GetClient(clientId, trackChanges: false);
+            if (client == null)
+            {
+                _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
+                return NotFound();
+            }
+            var orderForClient = _repository.Order.GetOrder(clientId, id,
+                trackChanges: false);
+            if (orderForClient == null)
+            {
+                _logger.LogInfo($"Order with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            _repository.Order.DeleteOrder(orderForClient);
+            _repository.Save();
+            return NoContent();
+        }
+        [HttpPut("{id}")]
+        public IActionResult UpdateOrderForClient(Guid clientId, Guid id, [FromBody]
+            OrderForUpdateDto order)
+        {
+            if (order == null)
+            {
+                _logger.LogError("OrderForUpdateDto object sent from client is null.");
+                return BadRequest("OrderForUpdateDto object is null");
+            }
+            var client = _repository.Client.GetClient(clientId, trackChanges: false);
+            if (client == null)
+            {
+                _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
+                return NotFound();
+            }
+            var orderEntity = _repository.Order.GetOrder(clientId, id,
+                trackChanges:
+                true);
+            if (orderEntity == null)
+            {
+                _logger.LogInfo($"Order with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            _mapper.Map(order, orderEntity);
+            _repository.Save();
+            return NoContent();
+        } 
     }
     
     

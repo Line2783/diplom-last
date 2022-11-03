@@ -101,6 +101,8 @@ namespace diplom
                 CreateMap<Order, OrderDto>();
                 CreateMap<ClientForCreationDto, Client>();
                 CreateMap<OrderForCreationDto, Order>();
+                CreateMap<OrderForUpdateDto, Order>();
+
 
 
             }

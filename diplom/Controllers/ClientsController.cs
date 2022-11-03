@@ -111,5 +111,19 @@ namespace diplom.Controllers
             return CreatedAtRoute("ClientCollection", new { ids },
                 clientCollectionToReturn);
         }
+        
+        [HttpDelete("{id}")]
+        public IActionResult DeleteClient(Guid id)
+        {
+            var client = _repository.Client.GetClient(id, trackChanges: false);
+            if (client == null)
+            {
+                _logger.LogInfo($"Client with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            _repository.Client.DeleteClient(client);
+            _repository.Save();
+            return NoContent();
+        }
     }
 }

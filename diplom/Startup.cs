@@ -44,7 +44,7 @@ namespace diplom
             services.AddControllers(config => { 
                     config.RespectBrowserAcceptHeader = true;
                     config.ReturnHttpNotAcceptable = true;
-                })
+                }) .AddNewtonsoftJson()
                 .AddXmlDataContractSerializerFormatters()
                 .AddCustomCSVFormatter();
         }
@@ -88,6 +88,8 @@ namespace diplom
                 CreateMap<EmployeeForCreationDto, Employee>();
                 CreateMap<EmployeeForUpdateDto, Employee>();
                 CreateMap<CompanyForUpdateDto, Company>();
+                CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap(); 
+
 
                 
                 

@@ -26,18 +26,14 @@ namespace diplom.Controllers
         [HttpGet]
         public IActionResult GetClients()
         {
-            try
+            
             {
                 var clients = _repository.Client.GetAllClients(trackChanges:
                     false);
                 var clientsDto = _mapper.Map<IEnumerable<ClientDto>>(clients);
                 return Ok(clientsDto);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong in the {nameof(GetClients)}action {ex}");
-                return StatusCode(500, "Internal server error");
-            }
+            
         }
     }
 }

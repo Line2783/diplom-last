@@ -7,6 +7,7 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 namespace diplom.Controllers
 {
@@ -69,7 +70,8 @@ namespace diplom.Controllers
         }
         
         [HttpGet("collection/({ids})", Name = "ClientCollection")]
-        public IActionResult GetClientCollection(IEnumerable<Guid> ids)
+        public IActionResult GetClientCollection([ModelBinder(BinderType =
+            typeof(ArrayModelBinder<>))] IEnumerable<Guid> ids)
         {
             if (ids == null)
             {

@@ -24,19 +24,24 @@ namespace diplom.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet]
-        public IActionResult GetOrderForClient(Guid clientId)
+        [HttpGet("{id}")]
+        public IActionResult GetOrderForClient(Guid clientId, Guid id)
         {
             var client = _repository.Client.GetClient(clientId, trackChanges: false);
             if (client == null)
             {
-                _logger.LogInfo($"Company with id: {clientId} doesn't exist in the database.");
+                _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
                 return NotFound();
             }
         
-            var ordersFromDb = _repository.Order.GetOrders(clientId,
-                trackChanges: false);
-            return Ok(ordersFromDb);
+            var orderDb = _repository.Order.GetOrder(clientId, id, trackChanges: false);
+            if (orderDb == null)
+            {
+                _logger.LogInfo($"Order with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(orderDb);
+            return Ok(ordersDto);
         }
     }
     

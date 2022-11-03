@@ -19,5 +19,11 @@ namespace Repository
         public Order GetOrder(Guid clientId, Guid id, bool trackChanges) =>
             FindByCondition(e => e.ClientId.Equals(clientId) && e.Id.Equals(id),
                 trackChanges).SingleOrDefault();
+        
+        public void CreateOrderForClient(Guid clientId, Order order)
+        {
+            order.ClientId = clientId;
+            Create(order);
+        }
     }
 }

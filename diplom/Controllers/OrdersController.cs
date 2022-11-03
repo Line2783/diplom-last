@@ -24,7 +24,8 @@ namespace diplom.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetOrderForClient")] 
+
         public IActionResult GetOrderForClient(Guid clientId, Guid id)
         {
             var client = _repository.Client.GetClient(clientId, trackChanges: false);
@@ -42,6 +43,31 @@ namespace diplom.Controllers
             }
             var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(orderDb);
             return Ok(ordersDto);
+        }
+        
+        [HttpPost]
+        public IActionResult CreateOrderForClient(Guid clientId, [FromBody]
+            OrderForCreationDto order)
+        {
+            if (order == null)
+            {
+                _logger.LogError("OrderForCreationDto object sent from client is null.");
+                return BadRequest("OrderForCreationDto object is null");
+            }
+            var client = _repository.Client.GetClient(clientId, trackChanges: false);
+            if (client == null)
+            {
+                _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
+                return NotFound();
+            }
+            var orderEntity = _mapper.Map<Order>(order);
+            _repository.Order.CreateOrderForClient(clientId, orderEntity);
+            _repository.Save();
+            var orderToReturn = _mapper.Map<OrderDto>(orderEntity);
+            return CreatedAtRoute("GetOrderForClient", new
+            {
+                clientId, id = orderToReturn.Id
+            }, orderToReturn);
         }
     }
     

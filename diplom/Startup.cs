@@ -92,6 +92,9 @@ namespace diplom
                         
                 opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Age)));
                 CreateMap<Order, OrderDto>();
+                CreateMap<ClientForCreationDto, Client>();
+                CreateMap<OrderForCreationDto, Order>();
+
 
             }
         }

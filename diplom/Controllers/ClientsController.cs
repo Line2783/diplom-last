@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
+using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,6 +50,22 @@ namespace diplom.Controllers
                 var clientDto = _mapper.Map<ClientDto>(client);
                 return Ok(clientDto);
             }
+        }
+        
+        [HttpPost]
+        public IActionResult CreateClient([FromBody] ClientForCreationDto client)
+        {
+            if (client == null)
+            {
+                _logger.LogError("ClientForCreationDto object sent from client is null.");
+                return BadRequest("ClientForCreationDto object is null");
+            }
+            var clientEntity = _mapper.Map<Client>(client);
+            _repository.Client.CreateClient(clientEntity);
+            _repository.Save();
+            var clientToReturn = _mapper.Map<ClientDto>(clientEntity);
+            return CreatedAtRoute("ClientById", new { id = clientToReturn.Id },
+                clientToReturn);
         }
     }
 }

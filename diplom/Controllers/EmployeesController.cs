@@ -105,6 +105,11 @@ namespace diplom.Controllers
                 _logger.LogError("EmployeeForUpdateDto object sent from client is null.");
                 return BadRequest("EmployeeForUpdateDto object is null");
             }
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the EmployeeForUpdateDto object");
+                return UnprocessableEntity(ModelState);
+            }
             var company = _repository.Company.GetCompany(companyId, trackChanges: false);
             if (company == null)
             {

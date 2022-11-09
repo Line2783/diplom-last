@@ -35,6 +35,8 @@ namespace diplom.Controllers
         public async Task<IActionResult> GetEmployeesForCompany(Guid companyId,
             [FromQuery] EmployeeParameters employeeParameters)
         {
+            if (!employeeParameters.ValidAgeRange)
+                return BadRequest("Max age can't be less than min age.");
             var company = await _repository.Company.GetCompanyAsync(companyId,
                 trackChanges:
                 false);

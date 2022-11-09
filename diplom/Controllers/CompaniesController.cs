@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using diplom.ActionFilters;
 using diplom.ModelBinders;
 using Entities.DataTransferObjects;
 using Entities.Models;
@@ -55,14 +56,10 @@ namespace diplom.Controllers
             }
         }
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto
             company)
         {
-            if (company == null)
-            {
-                _logger.LogError("CompanyForCreationDto object sent from client is null.");
-                return BadRequest("CompanyForCreationDto object is null");
-            }
             var companyEntity = _mapper.Map<Company>(company);
             _repository.Company.CreateCompany(companyEntity);
             await _repository.SaveAsync();
@@ -129,15 +126,10 @@ namespace diplom.Controllers
         }
         
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> UpdateCompany(Guid id, [FromBody]
             CompanyForUpdateDto company)
         {
-            if (company == null)
-            {
-                
-                _logger.LogError("CompanyForUpdateDto object sent from client is null.");
-                return BadRequest("CompanyForUpdateDto object is null");
-            }
             var companyEntity = await _repository.Company.GetCompanyAsync(id,
                 trackChanges:
                 true);

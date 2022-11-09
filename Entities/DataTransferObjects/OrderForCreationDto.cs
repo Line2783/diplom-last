@@ -1,9 +1,9 @@
-﻿namespace Entities.DataTransferObjects
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Entities.DataTransferObjects
 {
-    public class OrderForCreationDto 
+    public class OrderForCreationDto : OrderForManipulationDto
     {
-        public string Product { get; set; }
-        public int Quantity { get; set; }
-        public int Cost { get; set; }
+        
     }
 }

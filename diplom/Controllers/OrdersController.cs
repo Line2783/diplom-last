@@ -55,7 +55,8 @@ namespace diplom.Controllers
                 _logger.LogError("OrderForCreationDto object sent from client is null.");
                 return BadRequest("OrderForCreationDto object is null");
             }
-            var client = _repository.Client.GetClient(clientId, trackChanges: false);
+            
+            var client = _repository.Client.GetClient(clientId, trackChanges: false);   
             if (client == null)
             {
                 _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
@@ -100,6 +101,7 @@ namespace diplom.Controllers
                 _logger.LogError("OrderForUpdateDto object sent from client is null.");
                 return BadRequest("OrderForUpdateDto object is null");
             }
+            
             var client = _repository.Client.GetClient(clientId, trackChanges: false);
             if (client == null)
             {
@@ -141,9 +143,15 @@ namespace diplom.Controllers
                 _logger.LogInfo($"Order with id: {id} doesn't exist in the database.");
                 return NotFound();
             }
-            var orderToPatch = _mapper.Map<OrderForUpdateDto>(orderEntity);
-            patchDoc.ApplyTo(orderToPatch);
             
+            var orderToPatch = _mapper.Map<OrderForUpdateDto>(orderEntity);
+            patchDoc.ApplyTo(orderToPatch, ModelState);
+            TryValidateModel(orderToPatch);
+            if(!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the patch document");
+                return UnprocessableEntity(ModelState);
+            }
             _mapper.Map(orderToPatch, orderEntity);
             _repository.Save();
             return NoContent();

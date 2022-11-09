@@ -6,6 +6,7 @@ using Contracts;
 using diplom.ActionFilters;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +29,25 @@ namespace diplom.Controllers
             _mapper = mapper;
         }
         
-        [HttpGet("{id}", Name = "GetEmployeeForCompany")] 
-
+        [HttpGet]
+        [HttpGet]
+        public async Task<IActionResult> GetEmployeesForCompany(Guid companyId,
+            [FromQuery] EmployeeParameters employeeParameters)
+        {
+            var company = await _repository.Company.GetCompanyAsync(companyId,
+                trackChanges:
+                false);
+            if (company == null)
+            {
+                _logger.LogInfo($"Company with id: {companyId} doesn't exist in the database.");
+                return NotFound();
+            }
+            var employeesFromDb = await _repository.Employee.GetEmployeesAsync(companyId, 
+                employeeParameters, trackChanges: false);
+            var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesFromDb);
+            return Ok(employeesDto);
+        }
+        [HttpGet("{id}", Name = "GetEmployeeForCompany")]
         public async Task<IActionResult> GetEmployeeForCompany(Guid companyId, Guid id)
         {
             var company = await _repository.Company.GetCompanyAsync(companyId, trackChanges: false);
@@ -49,6 +67,7 @@ namespace diplom.Controllers
             var employee = _mapper.Map<EmployeeDto>(employeeDb);
             return Ok(employee);
         }
+        
         [HttpPost]
         public async Task<IActionResult> CreateEmployeeForCompany(Guid companyId, [FromBody]
             EmployeeForCreationDto employee)

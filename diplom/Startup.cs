@@ -19,6 +19,7 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
+using Repository.DataShaping;
 
 namespace diplom
 {
@@ -57,6 +58,8 @@ namespace diplom
             services.AddScoped<ValidateEmployeeForCompanyExistsAttribute>();
             services.AddScoped<ValidateClientExistsAttribute>();
             services.AddScoped<ValidateOrderForClientExistsAttribute>();
+            services.AddScoped <IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>(); 
+
 
 
         }

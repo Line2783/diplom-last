@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace diplom.ActionFilters
 {
-    public class ValidateEmployeeForCompanyExistsAttribute : IAsyncActionFilter
+    public class ValidateOrderForClientExistsAttribute: IAsyncActionFilter
+
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
-        public ValidateEmployeeForCompanyExistsAttribute(IRepositoryManager
+        public ValidateOrderForClientExistsAttribute(IRepositoryManager
                 repository,
             ILoggerManager logger)
         {
@@ -21,30 +22,31 @@ namespace diplom.ActionFilters
             ActionExecutionDelegate next)
         {
             var method = context.HttpContext.Request.Method;
-            var trackChanges = (method.Equals("PUT") || method.Equals("PATCH")) ? true : false;
-            var companyId = (Guid)context.ActionArguments["companyId"];
-            var company = await _repository.Company.GetCompanyAsync(companyId,
+            var trackChanges = (method.Equals("PUT") || method.Equals("PATCH")) ?
+                true : false;
+            var clientId = (Guid)context.ActionArguments["clientId"];
+            var client = await _repository.Client.GetClientAsync(clientId,
                 false);
-            if (company == null)
+            if (client == null)
             {
-                _logger.LogInfo($"Company with id: {companyId} doesn't exist in the database.");
+                _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
                 return;
                 context.Result = new NotFoundResult();
             }
             var id = (Guid)context.ActionArguments["id"];
-            var employee = await _repository.Employee.GetEmployeeAsync(companyId, id,
+            var order = await _repository.Order.GetOrderAsync(clientId, id, 
                 trackChanges);
-            if (employee == null)
+            if (order == null)
             {
-                _logger.LogInfo($"Employee with id: {id} doesn't exist in the database.");
+                _logger.LogInfo($"Order with id: {id} doesn't exist in the database.");
                 context.Result = new NotFoundResult();
             }
             
             else
             {
-                context.HttpContext.Items.Add("employee", employee);
+                context.HttpContext.Items.Add("order", order);
                 await next();
             }
-        }
+        }  
     }
 }

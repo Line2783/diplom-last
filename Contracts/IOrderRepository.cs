@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Models;
+using Entities.RequestFeatures;
 
 namespace Contracts
 {
     public interface IOrderRepository
     {
-        IEnumerable<Order> GetOrders(Guid orderId, bool trackChanges);
-        Order GetOrder(Guid orderId, Guid id, bool trackChanges);
+        Task<PagedList<Order>> GetOrdersAsync(Guid clientId, OrderParameters
+            orderParameters, bool trackChanges);
+        Task<Order> GetOrderAsync(Guid clientId, Guid id, bool trackChanges);
         void CreateOrderForClient(Guid clientId, Order order);
         void DeleteOrder(Order order);
 

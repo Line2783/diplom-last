@@ -29,7 +29,7 @@ namespace diplom.ActionFilters
             {
                 _logger.LogInfo($"Company with id: {companyId} doesn't exist in the database.");
                 return;
-          //      context.Result = new NotFoundResult();
+             //   context.Result = new NotFoundResult();
             }
             var id = (Guid)context.ActionArguments["id"];
             var employee = await _repository.Employee.GetEmployeeAsync(companyId, id,

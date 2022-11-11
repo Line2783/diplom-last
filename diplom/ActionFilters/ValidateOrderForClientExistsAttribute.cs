@@ -31,7 +31,7 @@ namespace diplom.ActionFilters
             {
                 _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
                 return;
-                context.Result = new NotFoundResult();
+          //      context.Result = new NotFoundResult();
             }
             var id = (Guid)context.ActionArguments["id"];
             var order = await _repository.Order.GetOrderAsync(clientId, id, 

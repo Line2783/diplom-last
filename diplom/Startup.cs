@@ -55,6 +55,8 @@ namespace diplom
             services.AddScoped<ValidationFilterAttribute>();
             services.AddScoped<ValidateCompanyExistsAttribute>();
             services.AddScoped<ValidateEmployeeForCompanyExistsAttribute>();
+            services.AddScoped<ValidateClientExistsAttribute>();
+            services.AddScoped<ValidateOrderForClientExistsAttribute>();
 
 
         }

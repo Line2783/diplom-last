@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using diplom.ActionFilters;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace diplom.Controllers
 {
@@ -26,8 +29,29 @@ namespace diplom.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet("{id}", Name = "GetOrderForClient")] 
-
+        [HttpGet]
+        public async Task<IActionResult> GetOrdersForClient(Guid clientId,
+            [FromQuery] OrderParameters orderParameters)
+        {
+            if (!orderParameters.ValidAgeRange)
+                return BadRequest("Quantity age can't be less than min Quantity.");
+            var client = await _repository.Client.GetClientAsync(clientId,
+                trackChanges:
+                false);
+            if (client == null)
+            {
+                _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
+                return NotFound();
+            }
+            var ordersFromDb = await _repository.Order.GetOrdersAsync(clientId, orderParameters,
+                 trackChanges: false);
+            Response.Headers.Add("X-Pagination",
+                JsonConvert.SerializeObject(ordersFromDb.MetaData));
+            var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(ordersFromDb);
+            return Ok(ordersDto);
+        }
+        
+        [HttpGet("{id}", Name = "GetOrdersForClient")]
         public async Task<IActionResult> GetOrderForClient(Guid clientId, Guid id)
         {
             var client = await _repository.Client.GetClientAsync(clientId, trackChanges: false);
@@ -37,7 +61,7 @@ namespace diplom.Controllers
                 return NotFound();
             }
         
-            var orderDb = _repository.Order.GetOrder(clientId, id, trackChanges: false);
+            var orderDb = _repository.Client.GetClientAsync(clientId,  trackChanges: false);
             if (orderDb == null)
             {
                 _logger.LogInfo($"Order with id: {id} doesn't exist in the database.");
@@ -74,49 +98,23 @@ namespace diplom.Controllers
         }
         
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidateOrderForClientExistsAttribute))]
         public async Task<IActionResult> DeleteOrderForClient(Guid clientId, Guid id)
         {
-            var client = await _repository.Client.GetClientAsync(clientId, trackChanges: false);
-            if (client == null)
-            {
-                _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
-                return NotFound();
-            }
-            var orderForClient = _repository.Order.GetOrder(clientId, id,
-                trackChanges: false);
-            if (orderForClient == null)
-            {
-                _logger.LogInfo($"Order with id: {id} doesn't exist in the database.");
-                return NotFound();
-            }
+            var orderForClient = HttpContext.Items["order"] as Order;
             _repository.Order.DeleteOrder(orderForClient);
             await _repository.SaveAsync();
             return NoContent();
         }
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ServiceFilter(typeof(ValidateOrderForClientExistsAttribute))]
         public async Task<IActionResult> UpdateOrderForClient(Guid clientId, Guid id, [FromBody]
             OrderForUpdateDto order)
         {
-            if (order == null)
-            {
-                _logger.LogError("OrderForUpdateDto object sent from client is null.");
-                return BadRequest("OrderForUpdateDto object is null");
-            }
             
-            var client = await _repository.Client.GetClientAsync(clientId, trackChanges: false);
-            if (client == null)
-            {
-                _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
-                return NotFound();
-            }
-            var orderEntity = _repository.Order.GetOrder(clientId, id,
-                trackChanges:
-                true);
-            if (orderEntity == null)
-            {
-                _logger.LogInfo($"Order with id: {id} doesn't exist in the database.");
-                return NotFound();
-            }
+            var orderEntity = HttpContext.Items["order"] as Order;
+
             _mapper.Map(order, orderEntity);
             await _repository.SaveAsync();
             return NoContent();
@@ -130,21 +128,8 @@ namespace diplom.Controllers
                 _logger.LogError("patchDoc object sent from client is null.");
                 return BadRequest("patchDoc object is null");
             }
-            var client = await _repository.Client.GetClientAsync(clientId, trackChanges: false);
-            if (client == null)
-            {
-                _logger.LogInfo($"Client with id: {clientId} doesn't exist in the database.");
-                return NotFound();
-            }
-            var orderEntity = _repository.Order.GetOrder(clientId, id,
-                trackChanges:
-                true);
-            if (orderEntity == null)
-            {
-                _logger.LogInfo($"Order with id: {id} doesn't exist in the database.");
-                return NotFound();
-            }
-            
+            var orderEntity = HttpContext.Items["order"] as Order;
+
             var orderToPatch = _mapper.Map<OrderForUpdateDto>(orderEntity);
             patchDoc.ApplyTo(orderToPatch, ModelState);
             TryValidateModel(orderToPatch);

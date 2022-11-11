@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using diplom.ActionFilters;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Http;
@@ -38,7 +39,7 @@ namespace diplom.Controllers
             }
             
         }
-        [HttpGet("{id}", Name = "CompanyById")]
+        [HttpGet("{id}", Name = "ClientById")]
         public async Task<IActionResult> GetClient(Guid id)
         {
             var client = await _repository.Client.GetClientAsync(id, trackChanges: false);
@@ -55,13 +56,10 @@ namespace diplom.Controllers
         }
         
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateClient([FromBody] ClientForCreationDto client)
         {
-            if (client == null)
-            {
-                _logger.LogError("ClientForCreationDto object sent from client is null.");
-                return BadRequest("ClientForCreationDto object is null");
-            }
+            
             var clientEntity = _mapper.Map<Client>(client);
             _repository.Client.CreateClient(clientEntity);
             await _repository.SaveAsync();
@@ -114,33 +112,22 @@ namespace diplom.Controllers
         }
         
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(ValidateClientExistsAttribute))]
         public async Task<IActionResult> DeleteClient(Guid id)
         {
-            var client = await _repository.Client.GetClientAsync(id, trackChanges: false);
-            if (client == null)
-            {
-                _logger.LogInfo($"Client with id: {id} doesn't exist in the database.");
-                return NotFound();
-            }
+            var client = HttpContext.Items["client"] as Client;
+
             _repository.Client.DeleteClient(client);
             await _repository.SaveAsync();
             return NoContent();
         }
         [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ServiceFilter(typeof(ValidateClientExistsAttribute))]
         public async Task<IActionResult> UpdateClient(Guid id, [FromBody] ClientForUpdateDto
             client)
         {
-            if (client == null)
-            {
-                _logger.LogError("ClientForUpdateDto object sent from client is null.");
-                return BadRequest("ClientForUpdateDto object is null");
-            }
-            var clientEntity = await _repository.Client.GetClientAsync(id, trackChanges: true);
-            if (clientEntity == null)
-            {
-                _logger.LogInfo($"Client with id: {id} doesn't exist in the database.");
-                return NotFound();
-            }
+            var clientEntity = HttpContext.Items["client"] as Client;
             _mapper.Map(client, clientEntity);
             await _repository.SaveAsync();
             return NoContent();

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using diplom.ActionFilters;
 using diplom.Extensions;
 using Entities.DataTransferObjects;
 using Entities.Models;
@@ -51,6 +52,13 @@ namespace diplom
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+            services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ValidateCompanyExistsAttribute>();
+            services.AddScoped<ValidateEmployeeForCompanyExistsAttribute>();
+            services.AddScoped<ValidateClientExistsAttribute>();
+            services.AddScoped<ValidateOrderForClientExistsAttribute>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -39,7 +39,7 @@ namespace diplom.Controllers
             }
             
         }
-        [HttpGet("{id}", Name = "CompanyById")]
+        [HttpGet("{id}", Name = "ClientById")]
         public async Task<IActionResult> GetClient(Guid id)
         {
             var client = await _repository.Client.GetClientAsync(id, trackChanges: false);

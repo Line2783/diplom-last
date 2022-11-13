@@ -31,7 +31,7 @@ namespace diplom.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet(Name = "GetCompanies"), Authorize]
+        [HttpGet(Name = "GetCompanies"), Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetCompanies()
         {
             var companies = await _repository.Company.GetAllCompaniesAsync(trackChanges:

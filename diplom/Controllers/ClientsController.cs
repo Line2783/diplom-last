@@ -31,7 +31,8 @@ namespace diplom.Controllers
         
         
         
-        [HttpGet(Name = "GetClients"), Authorize]
+        [HttpGet(Name = "GetClients"), Authorize(Roles = "Manager")]
+
         public async Task<IActionResult> GetClients()
         {
             

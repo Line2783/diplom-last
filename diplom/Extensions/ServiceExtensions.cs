@@ -55,6 +55,9 @@ namespace diplom.Extensions
                 opt.Conventions.Controller<CompaniesController>().HasApiVersion(new ApiVersion(1,0));
                 opt.Conventions.Controller<CompaniesV2Controller>().HasDeprecatedApiVersion(new
                     ApiVersion(2, 0));
+                opt.Conventions.Controller<ClientsController>().HasApiVersion(new ApiVersion(1,0));
+                opt.Conventions.Controller<ClientsV2Controller>().HasDeprecatedApiVersion(new
+                    ApiVersion(2, 0));
             });
         }
     }

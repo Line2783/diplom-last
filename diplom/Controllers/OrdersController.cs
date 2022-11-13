@@ -21,13 +21,15 @@ namespace diplom.Controllers
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
-        public OrdersController(IRepositoryManager repository, ILoggerManager
-                logger,
-            IMapper mapper)
+        private readonly IDataShaper<OrderDto> _dataShaper;
+
+        public OrdersController(IRepositoryManager repository, ILoggerManager logger,
+            IMapper mapper, IDataShaper<OrderDto> dataShaper)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
+            _dataShaper = dataShaper;
         }
         [HttpGet]
         public async Task<IActionResult> GetOrdersForClient(Guid clientId,
@@ -48,7 +50,8 @@ namespace diplom.Controllers
             Response.Headers.Add("X-Pagination",
                 JsonConvert.SerializeObject(ordersFromDb.MetaData));
             var ordersDto = _mapper.Map<IEnumerable<OrderDto>>(ordersFromDb);
-            return Ok(ordersDto);
+            return Ok(_dataShaper.ShapeData(ordersDto, orderParameters.Fields));
+
         }
         
         [HttpGet("{id}", Name = "GetOrdersForClient")]

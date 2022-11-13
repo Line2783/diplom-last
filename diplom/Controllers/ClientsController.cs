@@ -7,6 +7,7 @@ using Contracts;
 using diplom.ActionFilters;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
@@ -28,14 +29,10 @@ namespace diplom.Controllers
             _mapper = mapper;
         }
         
-        [HttpOptions]
-        public IActionResult GetClientsOptions()
-        {
-            Response.Headers.Add("Allow", "GET, OPTIONS, POST");
-            return Ok();
-        }
         
-        [HttpGet]
+        
+        [HttpGet(Name = "GetClients"), Authorize(Roles = "Manager")]
+
         public async Task<IActionResult> GetClients()
         {
             
@@ -139,6 +136,13 @@ namespace diplom.Controllers
             _mapper.Map(client, clientEntity);
             await _repository.SaveAsync();
             return NoContent();
+        }
+        
+        [HttpOptions]
+        public IActionResult GetClientsOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS, POST");
+            return Ok();
         }
     }
 }

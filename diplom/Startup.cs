@@ -19,6 +19,7 @@ using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
+using Repository;
 using Repository.DataShaping;
 
 namespace diplom
@@ -61,6 +62,12 @@ namespace diplom
             services.AddScoped <IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>(); 
             
             services.ConfigureVersioning();
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
+            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+
+
 
 
 
@@ -85,6 +92,8 @@ namespace diplom
             });
 
             app.UseRouting();
+            
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -107,9 +116,6 @@ namespace diplom
                 CreateMap<EmployeeForUpdateDto, Employee>();
                 CreateMap<CompanyForUpdateDto, Company>();
                 CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap(); 
-
-
-                
                 
                 
                 CreateMap<Client, ClientDto>()
@@ -123,6 +129,9 @@ namespace diplom
                 CreateMap<ClientForUpdateDto, Client>();
                 CreateMap<OrderForUpdateDto, Order>(); 
                 CreateMap<OrderForUpdateDto, Order>().ReverseMap(); 
+                
+                CreateMap<UserForRegistrationDto, User>();
+
 
 
 

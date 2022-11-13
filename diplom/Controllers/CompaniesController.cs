@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 namespace diplom.Controllers
 {
+    
     [Route("api/companies")]
     [ApiController]
     public class CompaniesController : ControllerBase
@@ -130,6 +131,13 @@ namespace diplom.Controllers
             _mapper.Map(company, companyEntity);
             await _repository.SaveAsync();
             return NoContent();
+        }
+        
+        [HttpOptions]
+        public IActionResult GetCompaniesOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS, POST");
+            return Ok();
         }
     }
 }

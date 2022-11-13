@@ -1,7 +1,10 @@
 ﻿using Contracts;
+using diplom.Controllers;
 using Entities;
 using LoggerService;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +43,22 @@ namespace diplom.Extensions
         public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
             builder.AddMvcOptions(config => config.OutputFormatters.Add(new
                 CsvOutputFormatter()));
-
+        
+        public static void ConfigureVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+                opt.ApiVersionReader = new HeaderApiVersionReader("api-version");
+                opt.Conventions.Controller<CompaniesController>().HasApiVersion(new ApiVersion(1,0));
+                opt.Conventions.Controller<CompaniesV2Controller>().HasDeprecatedApiVersion(new
+                    ApiVersion(2, 0));
+                opt.Conventions.Controller<ClientsController>().HasApiVersion(new ApiVersion(1,0));
+                opt.Conventions.Controller<ClientsV2Controller>().HasDeprecatedApiVersion(new
+                    ApiVersion(2, 0));
+            });
+        }
     }
 }

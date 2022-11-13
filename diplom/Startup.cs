@@ -59,6 +59,9 @@ namespace diplom
             services.AddScoped<ValidateClientExistsAttribute>();
             services.AddScoped<ValidateOrderForClientExistsAttribute>();
             services.AddScoped <IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>(); 
+            
+            services.ConfigureVersioning();
+
 
 
 

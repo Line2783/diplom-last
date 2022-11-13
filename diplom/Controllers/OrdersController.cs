@@ -32,6 +32,7 @@ namespace diplom.Controllers
             _dataShaper = dataShaper;
         }
         [HttpGet]
+        [HttpHead]
         public async Task<IActionResult> GetOrdersForClient(Guid clientId,
             [FromQuery] OrderParameters orderParameters)
         {

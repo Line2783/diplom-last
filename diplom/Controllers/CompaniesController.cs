@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 namespace diplom.Controllers
 {
+    [ApiVersion("1.0")]
     [Route("api/companies")]
     [ApiController]
     public class CompaniesController : ControllerBase

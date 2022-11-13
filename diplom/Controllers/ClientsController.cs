@@ -29,12 +29,7 @@ namespace diplom.Controllers
             _mapper = mapper;
         }
         
-        [HttpOptions]
-        public IActionResult GetClientsOptions()
-        {
-            Response.Headers.Add("Allow", "GET, OPTIONS, POST");
-            return Ok();
-        }
+        
         
         [HttpGet(Name = "GetClients"), Authorize]
         public async Task<IActionResult> GetClients()
@@ -140,6 +135,13 @@ namespace diplom.Controllers
             _mapper.Map(client, clientEntity);
             await _repository.SaveAsync();
             return NoContent();
+        }
+        
+        [HttpOptions]
+        public IActionResult GetClientsOptions()
+        {
+            Response.Headers.Add("Allow", "GET, OPTIONS, POST");
+            return Ok();
         }
     }
 }

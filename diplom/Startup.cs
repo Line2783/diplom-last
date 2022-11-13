@@ -61,6 +61,8 @@ namespace diplom
             services.AddScoped <IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>(); 
             
             services.ConfigureVersioning();
+            services.AddAuthentication();
+            services.ConfigureIdentity();
 
 
 
@@ -85,6 +87,8 @@ namespace diplom
             });
 
             app.UseRouting();
+            
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

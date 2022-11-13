@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace diplom.Controllers
 {
-    [Route("api/{v:apiversion}/companies")]
+    [Route("api/companies")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "v2")]
     public class CompaniesV2Controller : ControllerBase
     {
         private readonly IRepositoryManager _repository;

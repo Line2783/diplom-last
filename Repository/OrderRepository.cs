@@ -7,6 +7,7 @@ using Entities;
 using Entities.Models;
 using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
+using Repository.Extensions;
 
 namespace Repository
 {
@@ -16,13 +17,16 @@ namespace Repository
             : base(repositoryContext)
         {
         }
-         public async Task<PagedList<Order>> GetOrdersAsync (Guid clientId, OrderParameters orderParameters, bool trackChanges)
+        
+         public async Task<PagedList<Order>> GetOrdersAsync (Guid clientId, OrderParameters orderParameters, 
+             bool trackChanges)
         {
-            var orders = await FindByCondition(e => e.ClientId.Equals(clientId) &&
-                                                       (e.Quantity
-                                                           >= orderParameters.MinQuantity && e.Quantity <= orderParameters.MaxQuantity),
+           
+            var orders = await FindByCondition(e => e.ClientId.Equals(clientId),
                     trackChanges)
-                .OrderBy(e => e.Product)
+                .FilterOrders(orderParameters.MinQuantity, orderParameters.MaxQuantity)
+                .Search(orderParameters.SearchTerm)
+                .Sort(orderParameters.OrderBy)
                 .ToListAsync();
             return PagedList<Order>
                 .ToPagedList(orders, orderParameters.PageNumber,

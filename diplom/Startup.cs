@@ -63,6 +63,8 @@ namespace diplom
             services.ConfigureVersioning();
             services.AddAuthentication();
             services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
+
 
 
 
@@ -111,9 +113,6 @@ namespace diplom
                 CreateMap<EmployeeForUpdateDto, Employee>();
                 CreateMap<CompanyForUpdateDto, Company>();
                 CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap(); 
-
-
-                
                 
                 
                 CreateMap<Client, ClientDto>()
@@ -127,6 +126,9 @@ namespace diplom
                 CreateMap<ClientForUpdateDto, Client>();
                 CreateMap<OrderForUpdateDto, Order>(); 
                 CreateMap<OrderForUpdateDto, Order>().ReverseMap(); 
+                
+                CreateMap<UserForRegistrationDto, User>();
+
 
 
 

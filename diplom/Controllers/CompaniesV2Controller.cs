@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace diplom.Controllers
 {
-    [ApiVersion("2.0")]
-    [Route("api/companies")]
+    [Route("api/{v:apiversion}/companies")]
     [ApiController]
     public class CompaniesV2Controller : ControllerBase
     {

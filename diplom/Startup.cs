@@ -18,6 +18,7 @@ using diplom.Extensions;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Server.HttpSys;
 using NLog;
 using Repository.DataShaping;
 
@@ -64,6 +65,8 @@ namespace diplom
             services.AddAuthentication();
             services.ConfigureIdentity();
             services.ConfigureJWT(Configuration);
+            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+
 
 
 

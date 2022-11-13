@@ -7,6 +7,7 @@ using Contracts;
 using diplom.ActionFilters;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
@@ -35,7 +36,7 @@ namespace diplom.Controllers
             return Ok();
         }
         
-        [HttpGet]
+        [HttpGet(Name = "GetClients"), Authorize]
         public async Task<IActionResult> GetClients()
         {
             

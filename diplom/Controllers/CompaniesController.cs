@@ -8,6 +8,7 @@ using diplom.ActionFilters;
 using diplom.ModelBinders;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
@@ -30,7 +31,7 @@ namespace diplom.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-        [HttpGet]
+        [HttpGet(Name = "GetCompanies"), Authorize]
         public async Task<IActionResult> GetCompanies()
         {
             var companies = await _repository.Company.GetAllCompaniesAsync(trackChanges:

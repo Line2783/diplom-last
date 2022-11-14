@@ -16,6 +16,7 @@ namespace diplom.Controllers
 {
     [Route("api/clients")]
     [ApiController]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class ClientsController : ControllerBase
     {
         private readonly IRepositoryManager _repository;

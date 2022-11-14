@@ -16,7 +16,7 @@ namespace Entities.Models
         [Required(ErrorMessage = "Cost is a required field.")]
         [MaxLength(20, ErrorMessage = "Maximum length for the Cost is 20 characters.")]
         public int Cost { get; set; }
-        [ForeignKey(nameof(Order))]
+        
         public Guid ClientId { get; set; }
         public Client Client { get; set; }
         

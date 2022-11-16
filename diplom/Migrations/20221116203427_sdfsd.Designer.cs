@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace diplom.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20221113182439_AddedRolesToDb")]
-    partial class AddedRolesToDb
+    [Migration("20221116203427_sdfsd")]
+    partial class sdfsd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -226,12 +226,6 @@ namespace diplom.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -264,6 +258,9 @@ namespace diplom.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -307,15 +304,15 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f1b08599-58fb-4d05-8afa-6659337b319b",
-                            ConcurrencyStamp = "cd79577c-1f3b-46cb-b1bd-afe963fd1077",
-                            Name = "Manager",
-                            NormalizedName = "MANAGER"
+                            Id = "36bf4533-20a2-430f-bc98-9b8e400e6b82",
+                            ConcurrencyStamp = "ae6c0856-66ec-430d-875e-5f3221a27094",
+                            Name = "User",
+                            NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "97615302-257f-4ffc-a268-309b3f10b5fa",
-                            ConcurrencyStamp = "c42bfc2c-44e5-494a-ad89-d08e4aa5242b",
+                            Id = "abcd977e-f22f-4e76-89ce-e107b3a259f7",
+                            ConcurrencyStamp = "6572d638-eec7-4a8b-bf61-c7e96b4d76bc",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

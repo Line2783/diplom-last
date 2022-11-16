@@ -26,7 +26,7 @@ namespace Repository
         }
         public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
         {
-            _user = await _userManager.FindByNameAsync(userForAuth.UserName);
+            _user = await _userManager.FindByNameAsync(userForAuth.Email);
             return (_user != null && await _userManager.CheckPasswordAsync(_user,
                 userForAuth.Password));
         }
@@ -49,7 +49,7 @@ namespace Repository
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, _user.UserName)
+                new Claim(ClaimTypes.Name, _user.Email)
             };
             var roles = await _userManager.GetRolesAsync(_user);
             foreach (var role in roles)

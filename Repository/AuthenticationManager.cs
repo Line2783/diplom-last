@@ -26,7 +26,7 @@ namespace Repository
         }
         public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
         {
-            _user = await _userManager.FindByNameAsync(userForAuth.Email);
+            _user = await _userManager.FindByEmailAsync(userForAuth.Email);
             return (_user != null && await _userManager.CheckPasswordAsync(_user,
                 userForAuth.Password));
         }

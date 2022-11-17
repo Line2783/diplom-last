@@ -30,7 +30,7 @@ namespace diplom.Controllers
         
         
         
-        [HttpPost]
+        [HttpPost("registrationUser")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto
             userForRegistration)
@@ -49,6 +49,27 @@ namespace diplom.Controllers
             await _userManager.AddToRolesAsync(user, userForRegistration.Roles);
             return StatusCode(201);
         }
+        
+        [HttpPost("registrationCompany")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> RegisterCompanyy([FromBody] CompanyyForRegistrationDto
+            companyyForRegistration)
+        {
+            var user = _mapper.Map<User>(companyyForRegistration);
+            var result = await _userManager.CreateAsync(user,
+                companyyForRegistration.Password);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+                return BadRequest(ModelState);
+            }
+            await _userManager.AddToRolesAsync(user, companyyForRegistration.Roles);
+            return StatusCode(201);
+        }
+        
         [HttpPost("login")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto
@@ -59,7 +80,7 @@ namespace diplom.Controllers
                 _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wrong user name or password.");
                 return Unauthorized();
             }
-            return Ok(new { Token = await _authManager.CreateToken() });
+            return Ok(new { Token = await _authManager.CreateToken(),  });
         }
     }
     }

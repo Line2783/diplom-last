@@ -11,6 +11,9 @@ namespace Repository
         private IEmployeeRepository _employeeRepository;
         private IClientRepository _clientRepository;
         private IOrderRepository _orderRepository;
+        
+        private IHotelRepository _hotelRepository;
+        private IAdvertisementRepository _advertisementRepository;
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
@@ -51,6 +54,28 @@ namespace Repository
                 return _orderRepository;
             }
         }
+
+
+        public IHotelRepository Hotel
+        {
+            get
+            {
+                if (_hotelRepository == null)
+                    _hotelRepository = new HotelRepository(_repositoryContext);
+                return _hotelRepository;
+            }
+        }
+
+        public IAdvertisementRepository Advertisement
+        {
+            get
+            {
+                if (_advertisementRepository == null)
+                    _advertisementRepository = new AdvertisementRepository(_repositoryContext);
+                return _advertisementRepository;
+            }
+        }
+        
         public void Save() => _repositoryContext.SaveChanges();
         public Task SaveAsync() => _repositoryContext.SaveChangesAsync();
 

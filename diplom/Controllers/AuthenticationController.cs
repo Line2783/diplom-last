@@ -17,15 +17,17 @@ namespace diplom.Controllers
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+       
         private readonly IAuthenticationManager _authManager;
 
         public AuthenticationController(ILoggerManager logger, IMapper mapper,
-            UserManager<User> userManager, IAuthenticationManager authManager)
+            UserManager<User> userManager,  IAuthenticationManager authManager)
         {
             _logger = logger;
             _mapper = mapper;
             _userManager = userManager;
             _authManager = authManager;
+           
         }
         
         
@@ -50,25 +52,7 @@ namespace diplom.Controllers
             return StatusCode(201);
         }
         
-        [HttpPost("registrationCompany")]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> RegisterCompanyy([FromBody] CompanyyForRegistrationDto
-            companyyForRegistration)
-        {
-            var user = _mapper.Map<User>(companyyForRegistration);
-            var result = await _userManager.CreateAsync(user,
-                companyyForRegistration.Password);
-            if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.TryAddModelError(error.Code, error.Description);
-                }
-                return BadRequest(ModelState);
-            }
-            await _userManager.AddToRolesAsync(user, companyyForRegistration.Roles);
-            return StatusCode(201);
-        }
+       
         
         [HttpPost("login")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -77,7 +61,7 @@ namespace diplom.Controllers
         {
             if (!await _authManager.ValidateUser(user))
             {
-                _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wrong user name or password.");
+                _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wrong Email or password.");
                 return Unauthorized();
             }
             return Ok(new { Token = await _authManager.CreateToken(),  });

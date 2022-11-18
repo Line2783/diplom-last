@@ -257,9 +257,6 @@ namespace diplom.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -302,17 +299,17 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "36bf4533-20a2-430f-bc98-9b8e400e6b82",
-                            ConcurrencyStamp = "ae6c0856-66ec-430d-875e-5f3221a27094",
+                            Id = "14b2883b-a65f-4f8a-997c-9ee57f78b0eb",
+                            ConcurrencyStamp = "d41750a7-2361-4a17-884c-bdc06635b434",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "abcd977e-f22f-4e76-89ce-e107b3a259f7",
-                            ConcurrencyStamp = "6572d638-eec7-4a8b-bf61-c7e96b4d76bc",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
+                            Id = "ff9f98a3-0d96-40fe-aaab-fa47f9550565",
+                            ConcurrencyStamp = "bbc63f61-6808-4bf4-990a-58e301d829d6",
+                            Name = "Companyy",
+                            NormalizedName = "COMPANYY"
                         });
                 });
 

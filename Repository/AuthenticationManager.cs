@@ -16,13 +16,16 @@ namespace Repository
     public class AuthenticationManager : IAuthenticationManager
     {
         private readonly UserManager<User> _userManager;
+        
         private readonly IConfiguration _configuration;
         private User _user;
-        public AuthenticationManager(UserManager<User> userManager, IConfiguration
+        
+        public AuthenticationManager(UserManager<User> userManager,  IConfiguration
             configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
+            
         }
         public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
         {
@@ -30,6 +33,7 @@ namespace Repository
             return (_user != null && await _userManager.CheckPasswordAsync(_user,
                 userForAuth.Password));
         }
+        
         public async Task<string> CreateToken()
         {
             var signingCredentials = GetSigningCredentials();

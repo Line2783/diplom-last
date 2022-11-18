@@ -28,7 +28,7 @@ namespace Entities.Configuration
                 },
                 new Advertisement
                 {
-                    Id = new Guid("933e8244-d563-476c-b820-5c6587b6235a"),
+                    Id = new Guid("3e3502fd-1f09-40a9-818a-6f35cd6d43fa"),
                     Name = "LoveYourCats",
                     City = "Saransk",
                     Address = "Bolshevistskaya street,69",

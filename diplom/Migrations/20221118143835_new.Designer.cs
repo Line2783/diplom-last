@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace diplom.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20221118140252_newmod")]
-    partial class newmod
+    [Migration("20221118143835_new")]
+    partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,6 +73,36 @@ namespace diplom.Migrations
                     b.HasIndex("HotelId");
 
                     b.ToTable("Advertisements");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("933e8244-d563-476c-b820-5c6587b6235a"),
+                            Address = "Bolshevistskaya street,68",
+                            Cat = true,
+                            City = "Saransk",
+                            Description = "Loves your pats very much",
+                            Dog = true,
+                            HotelId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "LoveYourPats",
+                            Number = "89271478520",
+                            Other = true,
+                            Rodent = true
+                        },
+                        new
+                        {
+                            Id = new Guid("3e3502fd-1f09-40a9-818a-6f35cd6d43fa"),
+                            Address = "Bolshevistskaya street,69",
+                            Cat = true,
+                            City = "Saransk",
+                            Description = "Loves your cats so very much:)",
+                            Dog = false,
+                            HotelId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Name = "LoveYourCats",
+                            Number = "89271478520",
+                            Other = false,
+                            Rodent = false
+                        });
                 });
 
             modelBuilder.Entity("Entities.Models.Client", b =>
@@ -237,6 +267,22 @@ namespace diplom.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Hotels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("099153b0-3e4d-46f4-893e-e90c5589bc84"),
+                            Email = "hellopet@mail.ru",
+                            HotelName = "LoveYourPets",
+                            INN = "147258963101"
+                        },
+                        new
+                        {
+                            Id = new Guid("052678b7-7705-4910-ac55-30e7a224b76d"),
+                            Email = "getpet@gmail.com",
+                            HotelName = "WishesPet",
+                            INN = "512369874121"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Models.Order", b =>
@@ -380,15 +426,15 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "35572d7d-c379-46e7-9fe3-7eb824c06d3a",
-                            ConcurrencyStamp = "2d3f5cde-c0fe-4a65-8c63-475c165b165d",
+                            Id = "cd7f9f59-38cf-47ed-9bed-0d857f1ac0f5",
+                            ConcurrencyStamp = "7260614d-7340-4903-a2f6-5f9e0f3e6c21",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "aafe4e7f-b7c4-4fe8-9c51-52cc228ca0fe",
-                            ConcurrencyStamp = "b02278fd-161a-4dd5-b786-10c7ae9f8472",
+                            Id = "89282a4a-2fd4-434b-8037-9742729d8544",
+                            ConcurrencyStamp = "88432246-62fb-4af4-bd00-a70f133c4e87",
                             Name = "Companyy",
                             NormalizedName = "COMPANYY"
                         });

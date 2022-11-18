@@ -21,6 +21,9 @@ namespace Entities
             
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
+            modelBuilder.ApplyConfiguration(new HotelConfiguration());
+            modelBuilder.ApplyConfiguration(new AdvertisementConfiguration());
+
         }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Employee> Employees { get; set; }

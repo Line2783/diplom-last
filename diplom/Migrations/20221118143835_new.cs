@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace diplom.Migrations
 {
-    public partial class newmod : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -207,7 +207,7 @@ namespace diplom.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
-                    
+                   
                 });
 
             migrationBuilder.CreateTable(
@@ -250,12 +250,16 @@ namespace diplom.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Advertisements", x => x.AdvertisementId);
-                    table.ForeignKey(
-                        name: "FK_Advertisements_Hotels_HotelId",
-                        column: x => x.HotelId,
-                        principalTable: "Hotels",
-                        principalColumn: "HotelId",
-                        onDelete: ReferentialAction.Cascade);
+                    
+                });
+
+            migrationBuilder.InsertData(
+                table: "Advertisements",
+                columns: new[] { "AdvertisementId", "Address", "Cat", "City", "Description", "Dog", "HotelId", "Name", "Number", "Other", "Rodent" },
+                values: new object[,]
+                {
+                    { new Guid("933e8244-d563-476c-b820-5c6587b6235a"), "Bolshevistskaya street,68", true, "Saransk", "Loves your pats very much", true, new Guid("00000000-0000-0000-0000-000000000000"), "LoveYourPats", "89271478520", true, true },
+                    { new Guid("3e3502fd-1f09-40a9-818a-6f35cd6d43fa"), "Bolshevistskaya street,69", true, "Saransk", "Loves your cats so very much:)", false, new Guid("00000000-0000-0000-0000-000000000000"), "LoveYourCats", "89271478520", false, false }
                 });
 
             migrationBuilder.InsertData(
@@ -263,8 +267,8 @@ namespace diplom.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "35572d7d-c379-46e7-9fe3-7eb824c06d3a", "2d3f5cde-c0fe-4a65-8c63-475c165b165d", "User", "USER" },
-                    { "aafe4e7f-b7c4-4fe8-9c51-52cc228ca0fe", "b02278fd-161a-4dd5-b786-10c7ae9f8472", "Companyy", "COMPANYY" }
+                    { "cd7f9f59-38cf-47ed-9bed-0d857f1ac0f5", "7260614d-7340-4903-a2f6-5f9e0f3e6c21", "User", "USER" },
+                    { "89282a4a-2fd4-434b-8037-9742729d8544", "88432246-62fb-4af4-bd00-a70f133c4e87", "Companyy", "COMPANYY" }
                 });
 
             migrationBuilder.InsertData(
@@ -283,6 +287,15 @@ namespace diplom.Migrations
                 {
                     { new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870"), "583 Wall Dr. Gwynn Oak, MD 21207", "USA", "IT_Solutions Ltd" },
                     { new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3"), "312 Forest Avenue, BF 923", "USA", "Admin_Solutions Ltd" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Hotels",
+                columns: new[] { "HotelId", "Email", "HotelName", "INN" },
+                values: new object[,]
+                {
+                    { new Guid("099153b0-3e4d-46f4-893e-e90c5589bc84"), "hellopet@mail.ru", "LoveYourPets", "147258963101" },
+                    { new Guid("052678b7-7705-4910-ac55-30e7a224b76d"), "getpet@gmail.com", "WishesPet", "512369874121" }
                 });
 
             migrationBuilder.InsertData(

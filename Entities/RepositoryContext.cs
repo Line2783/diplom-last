@@ -26,6 +26,8 @@ namespace Entities
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Advertisement> Advertisements { get; set; }
         
 
 

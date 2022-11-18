@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace diplom.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20221118114135_112")]
-    partial class _112
+    [Migration("20221118140252_newmod")]
+    partial class newmod
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,60 @@ namespace diplom.Migrations
                 .HasAnnotation("ProductVersion", "3.1.30")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Entities.Models.Advertisement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("AdvertisementId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
+
+                    b.Property<bool>("Cat")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
+
+                    b.Property<bool>("Dog")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("HotelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
+
+                    b.Property<bool>("Other")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Rodent")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HotelId");
+
+                    b.ToTable("Advertisements");
+                });
 
             modelBuilder.Entity("Entities.Models.Client", b =>
                 {
@@ -158,6 +212,31 @@ namespace diplom.Migrations
                             Name = "Kane Miller",
                             Position = "Administrator"
                         });
+                });
+
+            modelBuilder.Entity("Entities.Models.Hotel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("HotelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HotelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("INN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(12)")
+                        .HasMaxLength(12);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Hotels");
                 });
 
             modelBuilder.Entity("Entities.Models.Order", b =>
@@ -301,15 +380,15 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "14b2883b-a65f-4f8a-997c-9ee57f78b0eb",
-                            ConcurrencyStamp = "d41750a7-2361-4a17-884c-bdc06635b434",
+                            Id = "35572d7d-c379-46e7-9fe3-7eb824c06d3a",
+                            ConcurrencyStamp = "2d3f5cde-c0fe-4a65-8c63-475c165b165d",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "ff9f98a3-0d96-40fe-aaab-fa47f9550565",
-                            ConcurrencyStamp = "bbc63f61-6808-4bf4-990a-58e301d829d6",
+                            Id = "aafe4e7f-b7c4-4fe8-9c51-52cc228ca0fe",
+                            ConcurrencyStamp = "b02278fd-161a-4dd5-b786-10c7ae9f8472",
                             Name = "Companyy",
                             NormalizedName = "COMPANYY"
                         });
@@ -417,6 +496,15 @@ namespace diplom.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Entities.Models.Advertisement", b =>
+                {
+                    b.HasOne("Entities.Models.Hotel", "Hotel")
+                        .WithMany("Advertisements")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Entities.Models.Employee", b =>

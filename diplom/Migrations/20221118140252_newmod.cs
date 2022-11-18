@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace diplom.Migrations
 {
-    public partial class _112 : Migration
+    public partial class newmod : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,6 +72,20 @@ namespace diplom.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.CompanyId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Hotels",
+                columns: table => new
+                {
+                    HotelId = table.Column<Guid>(nullable: false),
+                    INN = table.Column<string>(maxLength: 12, nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    HotelName = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hotels", x => x.HotelId);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,7 +207,7 @@ namespace diplom.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
-                   
+                    
                 });
 
             migrationBuilder.CreateTable(
@@ -217,13 +231,40 @@ namespace diplom.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Advertisements",
+                columns: table => new
+                {
+                    AdvertisementId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(maxLength: 60, nullable: false),
+                    City = table.Column<string>(maxLength: 60, nullable: false),
+                    Address = table.Column<string>(maxLength: 60, nullable: false),
+                    Description = table.Column<string>(maxLength: 60, nullable: false),
+                    Number = table.Column<string>(maxLength: 60, nullable: false),
+                    Cat = table.Column<bool>(nullable: false),
+                    Dog = table.Column<bool>(nullable: false),
+                    Rodent = table.Column<bool>(nullable: false),
+                    Other = table.Column<bool>(nullable: false),
+                    HotelId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Advertisements", x => x.AdvertisementId);
+                    table.ForeignKey(
+                        name: "FK_Advertisements_Hotels_HotelId",
+                        column: x => x.HotelId,
+                        principalTable: "Hotels",
+                        principalColumn: "HotelId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "14b2883b-a65f-4f8a-997c-9ee57f78b0eb", "d41750a7-2361-4a17-884c-bdc06635b434", "User", "USER" },
-                    { "ff9f98a3-0d96-40fe-aaab-fa47f9550565", "bbc63f61-6808-4bf4-990a-58e301d829d6", "Companyy", "COMPANYY" }
+                    { "35572d7d-c379-46e7-9fe3-7eb824c06d3a", "2d3f5cde-c0fe-4a65-8c63-475c165b165d", "User", "USER" },
+                    { "aafe4e7f-b7c4-4fe8-9c51-52cc228ca0fe", "b02278fd-161a-4dd5-b786-10c7ae9f8472", "Companyy", "COMPANYY" }
                 });
 
             migrationBuilder.InsertData(
@@ -267,6 +308,11 @@ namespace diplom.Migrations
                 table: "Employees",
                 columns: new[] { "EmployeeId", "Age", "CompanyId", "Name", "Position" },
                 values: new object[] { new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"), 35, new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3"), "Kane Miller", "Administrator" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Advertisements_HotelId",
+                table: "Advertisements",
+                column: "HotelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -321,6 +367,9 @@ namespace diplom.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Advertisements");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -340,6 +389,9 @@ namespace diplom.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Hotels");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

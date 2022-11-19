@@ -26,6 +26,8 @@ namespace Repository
                 .OrderBy(c => c.Name)
                 .ToListAsync();
 
-        
+        public async Task<Advertisement> GetAdvertisementAsync(Guid advertisementId, bool trackChanges) =>
+            await FindByCondition(c => c.Id.Equals(advertisementId), trackChanges)
+                .SingleOrDefaultAsync();
     }
 }

@@ -10,5 +10,7 @@ namespace Contracts
     public interface IAdvertisementRepository
     {
         Task<IEnumerable<Advertisement>> GetAllAdvertisementsAsync(bool trackChanges);
+        Task<Advertisement> GetAdvertisementAsync(Guid advertisementId, bool trackChanges);
+
     }
 }

@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 namespace diplom.Controllers
 {
-    [Route("api/advertisements")]
+    [Route("api/hotels/advertisements")]
     [ApiController]
     public class AdvertisementsController : ControllerBase
     {
@@ -42,6 +42,26 @@ namespace diplom.Controllers
 
             return Ok(advetrisemntsDto);
 
+        }
+        
+        /// <summary>
+        /// Получение информации одного объявления по Id
+        /// </summary>
+        [HttpGet("{id}", Name = "AdvertisementById")]
+        public async Task<IActionResult> GetAdvertisement(Guid id)
+        {
+            var advertisement = await _repository.Advertisement.GetAdvertisementAsync(id, trackChanges:
+                false);
+            if (advertisement == null)
+            {
+                _logger.LogInfo($"Advertisement with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            else
+            {
+                var advertisementDto = _mapper.Map<AdvertisementDto>(advertisement);
+                return Ok(advertisementDto);
+            }
         }
 
         }

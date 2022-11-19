@@ -143,6 +143,7 @@ namespace diplom
                 CreateMap<CompanyyForRegistrationDto, Companyy>();
 
                 CreateMap<Hotel, HotelDto>();
+                CreateMap<Advertisement, AdvertisementDto>();
 
 
 

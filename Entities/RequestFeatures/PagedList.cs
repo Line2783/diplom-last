@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Entities.RequestFeatures;
 
-namespace Entities.RequestFeatures
+namespace Entities.RequestFeaturess
+
+
 {
     public class PagedList<T> : List<T>
     {

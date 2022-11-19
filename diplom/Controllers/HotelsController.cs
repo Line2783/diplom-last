@@ -40,6 +40,9 @@ namespace diplom.Controllers
             return Ok(hotelsDto);
 
         }
+        
+        /// <summary>
+        /// Получает список отеля по Id
         [HttpGet("{id}", Name = "HotelById")]
         public async Task<IActionResult> GetHotel(Guid id)
         {

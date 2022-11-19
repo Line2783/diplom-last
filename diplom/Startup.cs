@@ -142,6 +142,8 @@ namespace diplom
                 CreateMap<UserForRegistrationDto, User>();
                 CreateMap<CompanyyForRegistrationDto, Companyy>();
 
+                CreateMap<Hotel, HotelDto>();
+
 
 
 

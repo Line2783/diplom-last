@@ -1,5 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Contracts;
+using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +14,30 @@ namespace diplom.Controllers
     public class HotelsController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
-        private readonly ILoggerManager _manager;
+        private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
+
+        public HotelsController(IRepositoryManager repository, ILoggerManager
+            logger, IMapper mapper)
+        {
+            _repository = repository;
+            _logger = logger;
+            _mapper = mapper;
+        }
+
+        /// <summary>
+        /// Получает список всех отелей
+        /// </summary>
+        /// <returns> Список отелей</returns>.
+        [HttpGet(Name = "GetHotels")]
+        public async Task<IActionResult> GetHotels()
+        {
+            var hotels = await _repository.Hotel.GetAllHotelsAsync(trackChanges:
+                false);
+            var hotelsDto = _mapper.Map<IEnumerable<HotelDto>>(hotels);
+
+            return Ok(hotelsDto);
+
+        }
     }
 }

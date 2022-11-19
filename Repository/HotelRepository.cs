@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Contracts;
@@ -18,5 +19,9 @@ namespace Repository
             => await FindAll(trackChanges)
                 .OrderBy(c => c.HotelName)
                 .ToListAsync();
+        
+        public async Task<Hotel> GetHotelAsync(Guid hotelId, bool trackChanges) =>
+            await FindByCondition(c => c.Id.Equals(hotelId), trackChanges)
+                .SingleOrDefaultAsync();
     }
 }

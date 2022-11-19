@@ -61,7 +61,7 @@ namespace diplom.Controllers
                 var companyDto = _mapper.Map<CompanyDto>(company);
                 return Ok(companyDto);
             }
-        }
+        } 
         /// <summary>
         /// Создает вновь созданную компанию
         /// </summary>

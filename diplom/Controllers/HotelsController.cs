@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -38,6 +39,22 @@ namespace diplom.Controllers
 
             return Ok(hotelsDto);
 
+        }
+        [HttpGet("{id}", Name = "HotelById")]
+        public async Task<IActionResult> GetHotel(Guid id)
+        {
+            var hotel = await _repository.Hotel.GetHotelAsync(id, trackChanges:
+                false);
+            if (hotel == null)
+            {
+                _logger.LogInfo($"Hotel with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            else
+            {
+                var hotelDto = _mapper.Map<HotelDto>(hotel);
+                return Ok(hotelDto);
+            }
         }
     }
 }

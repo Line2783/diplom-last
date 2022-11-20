@@ -35,6 +35,12 @@ namespace Repository
             advertisement.HotelId = hotelId;
             Create(advertisement);
         }
+        public void CreateAdvertisement(Advertisement advertisement) => Create(advertisement);
+        
+        public void DeleteAdvertisement(Advertisement advertisement)
+        {
+            Delete(advertisement);
+        }
         
     }
 }

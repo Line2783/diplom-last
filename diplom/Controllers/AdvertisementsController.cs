@@ -89,34 +89,30 @@ namespace diplom.Controllers
         /// <summary>
         /// Создание объявления для отеля
         /// </summary>
-        [HttpPost("{hotelId}")]
-        public async Task<IActionResult> CreateAdvertisementForHotel(Guid hotelId, [FromBody]
-            AdvertisementForCreationDto advertisement)
+        [HttpPost(Name = "CreateAdvertisement")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(422)]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> CreateAdvertisement([FromBody] AdvertisementForCreationDto
+            advertisement)
         {
-            if (advertisement == null)
-            {
-                _logger.LogError("AdvertisementForCreationDto object sent from  is null.");
-                return BadRequest("AdvertisementForCreationDto object is null");
-            }
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError("Invalid model state for the AdvertisementForCreationDto object");
-                return UnprocessableEntity(ModelState);
-            }
-            var hotel = await _repository.Hotel.GetHotelAsync(hotelId, trackChanges: false);
-            if (hotel == null)
-            {
-                _logger.LogInfo($"Hotel with id: {hotelId} doesn't exist in the database.");
-                return NotFound();
-            }
             var advertisementEntity = _mapper.Map<Advertisement>(advertisement);
-            _repository.Advertisement.CreateAdvertisementForHotel(hotelId, advertisementEntity);
+            _repository.Advertisement.CreateAdvertisement(advertisementEntity);
             await _repository.SaveAsync();
             var advertisementToReturn = _mapper.Map<AdvertisementDto>(advertisementEntity);
-            return CreatedAtRoute("GetAdvertisementForHotel", new
-            {
-                hotelId, id = advertisementToReturn.Id
-            }, advertisementToReturn);
+            return CreatedAtRoute("AdvertisementById", new { id = advertisementToReturn.Id },
+                advertisementToReturn);
+        }
+        
+        [HttpDelete("{hotelId}")] 
+        [ServiceFilter(typeof(ValidateAdvertisementForHotelExistsAttribute))]
+        public async Task<IActionResult> DeleteAdvertisementForHotel(Guid hotelId, Guid id)
+        {
+            var advertisementForHotel = HttpContext.Items["advertisement"] as Advertisement;
+            _repository.Advertisement.DeleteAdvertisement(advertisementForHotel);
+            await _repository.SaveAsync();
+            return NoContent();
         }
 
     }

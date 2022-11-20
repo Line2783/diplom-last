@@ -68,8 +68,8 @@ namespace diplom
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.ConfigureSwagger();
 
-
-
+    
+            services.AddScoped<ValidateAdvertisementForHotelExistsAttribute>();
 
 
 

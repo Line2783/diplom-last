@@ -87,7 +87,7 @@ namespace diplom.Controllers
         }
         
         /// <summary>
-        /// Создание объявления для отеля
+        /// Создание объявления 
         /// </summary>
         [HttpPost(Name = "CreateAdvertisement")]
         [ProducesResponseType(201)]
@@ -105,12 +105,27 @@ namespace diplom.Controllers
                 advertisementToReturn);
         }
         
+        /// <summary>
+        /// Удаление объявления 
+        /// </summary>
         [HttpDelete("{id}")] 
         [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]
         public async Task<IActionResult> DeleteAdvertisement(Guid id)
         {
             var advertisement = HttpContext.Items["advertisement"] as Advertisement;
             _repository.Advertisement.DeleteAdvertisement(advertisement);
+            await _repository.SaveAsync();
+            return NoContent();
+        }
+        
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]
+        public async Task<IActionResult> UpdateAdvertisement(Guid id, [FromBody]
+            AdvertisementForUpdateDto advertisement)
+        {
+            var advertisementEntity = HttpContext.Items["advertisement"] as Advertisement;
+            _mapper.Map(advertisement, advertisementEntity);
             await _repository.SaveAsync();
             return NoContent();
         }

@@ -146,6 +146,8 @@ namespace diplom
                 CreateMap<Hotel, HotelDto>();
                 CreateMap<Advertisement, AdvertisementDto>();
                 CreateMap<AdvertisementForCreationDto, Advertisement>();
+                CreateMap<AdvertisementForUpdateDto, Advertisement>();
+                
 
 
 

@@ -105,12 +105,12 @@ namespace diplom.Controllers
                 advertisementToReturn);
         }
         
-        [HttpDelete("{hotelId}")] 
-        [ServiceFilter(typeof(ValidateAdvertisementForHotelExistsAttribute))]
-        public async Task<IActionResult> DeleteAdvertisementForHotel(Guid hotelId, Guid id)
+        [HttpDelete("{id}")] 
+        [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]
+        public async Task<IActionResult> DeleteAdvertisement(Guid id)
         {
-            var advertisementForHotel = HttpContext.Items["advertisement"] as Advertisement;
-            _repository.Advertisement.DeleteAdvertisement(advertisementForHotel);
+            var advertisement = HttpContext.Items["advertisement"] as Advertisement;
+            _repository.Advertisement.DeleteAdvertisement(advertisement);
             await _repository.SaveAsync();
             return NoContent();
         }

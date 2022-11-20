@@ -70,8 +70,9 @@ namespace diplom
 
     
             services.AddScoped<ValidateAdvertisementForHotelExistsAttribute>();
+            services.AddScoped<ValidateAdvertisementExistsAttribute>();
 
-
+            
 
 
         }

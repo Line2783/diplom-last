@@ -65,8 +65,31 @@ namespace diplom.Controllers
                 return Ok(advertisementDto);
             }
         }
+        [HttpGet("{hotelId}", Name = "GetAdvertisementForHotel")]
+        public async Task<IActionResult> GetAdvertisementForHotel(Guid hotelId, Guid id)
+        {
+            var hotel = await _repository.Hotel.GetHotelAsync(hotelId, trackChanges: false);
+            if (hotel == null)
+            {
+                _logger.LogInfo($"Hotel with id: {hotelId} doesn't exist in the database.");
+                return NotFound();
+            }
+            var advertisementDb = await _repository.Advertisement.GetAdvertisementAsync(hotelId, 
+                trackChanges:
+                false);
+            if (advertisementDb == null)
+            {
+                _logger.LogInfo($"Advertisement with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            var advertisement = _mapper.Map<AdvertisementDto>(advertisementDb);
+            return Ok(advertisement);
+        }
         
-        [HttpPost]
+        /// <summary>
+        /// Создание объявления для отеля
+        /// </summary>
+        [HttpPost("{hotelId}")]
         public async Task<IActionResult> CreateAdvertisementForHotel(Guid hotelId, [FromBody]
             AdvertisementForCreationDto advertisement)
         {

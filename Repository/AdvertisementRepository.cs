@@ -29,5 +29,12 @@ namespace Repository
         public async Task<Advertisement> GetAdvertisementAsync(Guid advertisementId, bool trackChanges) =>
             await FindByCondition(c => c.Id.Equals(advertisementId), trackChanges)
                 .SingleOrDefaultAsync();
+        
+        public void CreateAdvertisementForHotel(Guid hotelId, Advertisement advertisement)
+        {
+            advertisement.HotelId = hotelId;
+            Create(advertisement);
+        }
+        
     }
 }

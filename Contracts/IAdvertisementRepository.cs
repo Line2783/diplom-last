@@ -11,6 +11,7 @@ namespace Contracts
     {
         Task<IEnumerable<Advertisement>> GetAllAdvertisementsAsync(bool trackChanges);
         Task<Advertisement> GetAdvertisementAsync(Guid advertisementId, bool trackChanges);
+        void CreateAdvertisementForHotel(Guid hotelId, Advertisement advertisement);
 
     }
 }

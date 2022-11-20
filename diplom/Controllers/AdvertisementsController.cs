@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using diplom.ActionFilters;
 using Entities.DataTransferObjects;
+using Entities.Models;
 using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -63,8 +65,38 @@ namespace diplom.Controllers
                 return Ok(advertisementDto);
             }
         }
-
+        
+        [HttpPost]
+        public async Task<IActionResult> CreateAdvertisementForHotel(Guid hotelId, [FromBody]
+            AdvertisementForCreationDto advertisement)
+        {
+            if (advertisement == null)
+            {
+                _logger.LogError("AdvertisementForCreationDto object sent from  is null.");
+                return BadRequest("AdvertisementForCreationDto object is null");
+            }
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the AdvertisementForCreationDto object");
+                return UnprocessableEntity(ModelState);
+            }
+            var hotel = await _repository.Hotel.GetHotelAsync(hotelId, trackChanges: false);
+            if (hotel == null)
+            {
+                _logger.LogInfo($"Hotel with id: {hotelId} doesn't exist in the database.");
+                return NotFound();
+            }
+            var advertisementEntity = _mapper.Map<Advertisement>(advertisement);
+            _repository.Advertisement.CreateAdvertisementForHotel(hotelId, advertisementEntity);
+            await _repository.SaveAsync();
+            var advertisementToReturn = _mapper.Map<AdvertisementDto>(advertisementEntity);
+            return CreatedAtRoute("GetAdvertisementForHotel", new
+            {
+                hotelId, id = advertisementToReturn.Id
+            }, advertisementToReturn);
         }
+
     }
+}
     
 

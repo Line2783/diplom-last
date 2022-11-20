@@ -118,6 +118,9 @@ namespace diplom.Controllers
             return NoContent();
         }
         
+        /// <summary>
+        /// Редактирование объявления 
+        /// </summary>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]

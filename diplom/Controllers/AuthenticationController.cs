@@ -52,6 +52,26 @@ namespace diplom.Controllers
             return StatusCode(201);
         }
         
+        [HttpPost("registrationCompanyy")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> RegisterCompanyy([FromBody] CompanyyForRegistrationDto
+            companyyForRegistration)
+        {
+            var user = _mapper.Map<User>(companyyForRegistration);
+            var result = await _userManager.CreateAsync(user,
+                companyyForRegistration.Password);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+                return BadRequest(ModelState);
+            }
+            await _userManager.AddToRolesAsync(user, companyyForRegistration.Roles);
+            return StatusCode(201);
+        }
+        
        
         
         [HttpPost("login")]

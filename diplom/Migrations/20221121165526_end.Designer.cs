@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace diplom.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20221118143835_new")]
-    partial class @new
+    [Migration("20221121165526_end")]
+    partial class end
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -351,6 +351,12 @@ namespace diplom.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("HotelName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("INN")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -426,15 +432,15 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "cd7f9f59-38cf-47ed-9bed-0d857f1ac0f5",
-                            ConcurrencyStamp = "7260614d-7340-4903-a2f6-5f9e0f3e6c21",
+                            Id = "d33e4e25-c6c0-4383-b6c6-f0ee26daef75",
+                            ConcurrencyStamp = "c82ba501-fab1-4d0a-bc99-8542be74e54e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "89282a4a-2fd4-434b-8037-9742729d8544",
-                            ConcurrencyStamp = "88432246-62fb-4af4-bd00-a70f133c4e87",
+                            Id = "fb4420bf-e4ed-4d2b-bff7-8da63d1c93da",
+                            ConcurrencyStamp = "bf07fc9c-4edb-4b8f-9261-7785d553cb73",
                             Name = "Companyy",
                             NormalizedName = "COMPANYY"
                         });

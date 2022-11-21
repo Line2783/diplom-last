@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace diplom.Migrations
 {
-    public partial class @new : Migration
+    public partial class end : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -39,7 +39,9 @@ namespace diplom.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    INN = table.Column<string>(nullable: true),
+                    HotelName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -207,7 +209,7 @@ namespace diplom.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
-                   
+                    
                 });
 
             migrationBuilder.CreateTable(
@@ -267,8 +269,8 @@ namespace diplom.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "cd7f9f59-38cf-47ed-9bed-0d857f1ac0f5", "7260614d-7340-4903-a2f6-5f9e0f3e6c21", "User", "USER" },
-                    { "89282a4a-2fd4-434b-8037-9742729d8544", "88432246-62fb-4af4-bd00-a70f133c4e87", "Companyy", "COMPANYY" }
+                    { "d33e4e25-c6c0-4383-b6c6-f0ee26daef75", "c82ba501-fab1-4d0a-bc99-8542be74e54e", "User", "USER" },
+                    { "fb4420bf-e4ed-4d2b-bff7-8da63d1c93da", "bf07fc9c-4edb-4b8f-9261-7785d553cb73", "Companyy", "COMPANYY" }
                 });
 
             migrationBuilder.InsertData(

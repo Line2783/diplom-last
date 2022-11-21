@@ -141,7 +141,7 @@ namespace diplom
                 CreateMap<OrderForUpdateDto, Order>().ReverseMap(); 
                 
                 CreateMap<UserForRegistrationDto, User>();
-                CreateMap<CompanyyForRegistrationDto, Companyy>();
+                CreateMap<CompanyyForRegistrationDto, User>();
 
                 CreateMap<Hotel, HotelDto>();
                 CreateMap<Advertisement, AdvertisementDto>();

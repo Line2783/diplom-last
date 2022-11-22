@@ -14,21 +14,13 @@ namespace Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new CompanyConfiguration());
-            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
-            modelBuilder.ApplyConfiguration(new OrderConfiguration());
-            modelBuilder.ApplyConfiguration(new ClientConfiguration());
-            
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
             modelBuilder.ApplyConfiguration(new HotelConfiguration());
             modelBuilder.ApplyConfiguration(new AdvertisementConfiguration());
 
         }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Advertisement> Advertisements { get; set; }
         

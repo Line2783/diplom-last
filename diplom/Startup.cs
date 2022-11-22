@@ -20,7 +20,6 @@ using Entities.Models;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 using Repository;
-using Repository.DataShaping;
 
 namespace diplom
 {
@@ -32,9 +31,7 @@ namespace diplom
                 "/nlog.config"));
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         { 
@@ -44,39 +41,26 @@ namespace diplom
             services.ConfigureSqlContext(Configuration);
             services.ConfigureRepositoryManager();
             services.AddAutoMapper(typeof(Startup));
-            services.AddControllers(config => { 
+            services.AddControllers(config =>
+                {
                     config.RespectBrowserAcceptHeader = true;
                     config.ReturnHttpNotAcceptable = true;
-                }) .AddNewtonsoftJson()
-                .AddXmlDataContractSerializerFormatters()
-                .AddCustomCSVFormatter();
+                }).AddNewtonsoftJson()
+                .AddXmlDataContractSerializerFormatters();
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
             services.AddScoped<ValidationFilterAttribute>();
-            services.AddScoped<ValidateCompanyExistsAttribute>();
-            services.AddScoped<ValidateEmployeeForCompanyExistsAttribute>();
-            services.AddScoped<ValidateClientExistsAttribute>();
-            services.AddScoped<ValidateOrderForClientExistsAttribute>();
-            services.AddScoped <IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>(); 
-            
             services.ConfigureVersioning();
             services.AddAuthentication();
             services.ConfigureIdentity();
             services.ConfigureJWT(Configuration);
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.ConfigureSwagger();
-
-    
             services.AddScoped<ValidateAdvertisementForHotelExistsAttribute>();
             services.AddScoped<ValidateAdvertisementExistsAttribute>();
-
-            
-
-
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
         {
@@ -84,7 +68,6 @@ namespace diplom
             {
                 app.UseDeveloperExceptionPage();
             }
-            
             app.ConfigureExceptionHandler(logger);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -116,30 +99,6 @@ namespace diplom
         {
             public MappingProfile()
             {
-                CreateMap<Company, CompanyDto>()
-                    .ForMember(c => c.FullAddress,
-                        
-                opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
-                CreateMap<Employee, EmployeeDto>();
-                CreateMap<CompanyForCreationDto, Company>();
-                CreateMap<EmployeeForCreationDto, Employee>();
-                CreateMap<EmployeeForUpdateDto, Employee>();
-                CreateMap<CompanyForUpdateDto, Company>();
-                CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap(); 
-                
-                
-                CreateMap<Client, ClientDto>()
-                    .ForMember(c => c.AddressAge,
-                        
-                opt => opt.MapFrom(x => string.Join(' ', x.Address, x.Age)));
-                CreateMap<Order, OrderDto>();
-                CreateMap<ClientForCreationDto, Client>();
-                CreateMap<OrderForCreationDto, Order>();
-                CreateMap<OrderForUpdateDto, Order>();
-                CreateMap<ClientForUpdateDto, Client>();
-                CreateMap<OrderForUpdateDto, Order>(); 
-                CreateMap<OrderForUpdateDto, Order>().ReverseMap(); 
-                
                 CreateMap<UserForRegistrationDto, User>();
                 CreateMap<CompanyyForRegistrationDto, User>();
 
@@ -147,15 +106,6 @@ namespace diplom
                 CreateMap<Advertisement, AdvertisementDto>();
                 CreateMap<AdvertisementForCreationDto, Advertisement>();
                 CreateMap<AdvertisementForUpdateDto, Advertisement>();
-                
-
-
-
-
-
-
-
-
             }
         }
     }

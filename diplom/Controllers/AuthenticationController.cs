@@ -17,9 +17,7 @@ namespace diplom.Controllers
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
-       
         private readonly IAuthenticationManager _authManager;
-
         public AuthenticationController(ILoggerManager logger, IMapper mapper,
             UserManager<User> userManager,  IAuthenticationManager authManager)
         {
@@ -27,11 +25,7 @@ namespace diplom.Controllers
             _mapper = mapper;
             _userManager = userManager;
             _authManager = authManager;
-           
         }
-        
-        
-        
         [HttpPost("registrationUser")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto
@@ -51,7 +45,6 @@ namespace diplom.Controllers
             await _userManager.AddToRolesAsync(user, userForRegistration.Roles);
             return StatusCode(201);
         }
-        
         [HttpPost("registrationCompanyy")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterCompanyy([FromBody] CompanyyForRegistrationDto
@@ -71,9 +64,6 @@ namespace diplom.Controllers
             await _userManager.AddToRolesAsync(user, companyyForRegistration.Roles);
             return StatusCode(201);
         }
-        
-       
-        
         [HttpPost("login")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto
@@ -87,7 +77,7 @@ namespace diplom.Controllers
             return Ok(new { Token = await _authManager.CreateToken(),  });
         }
     }
-    }
+}
     
     
 

@@ -16,10 +16,8 @@ namespace Repository
     public class AuthenticationManager : IAuthenticationManager
     {
         private readonly UserManager<User> _userManager;
-        
         private readonly IConfiguration _configuration;
         private User _user;
-        
         public AuthenticationManager(UserManager<User> userManager,  IConfiguration
             configuration)
         {
@@ -33,7 +31,6 @@ namespace Repository
             return (_user != null && await _userManager.CheckPasswordAsync(_user,
                 userForAuth.Password));
         }
-        
         public async Task<string> CreateToken()
         {
             var signingCredentials = GetSigningCredentials();
@@ -42,7 +39,6 @@ namespace Repository
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
         private SigningCredentials GetSigningCredentials()
-            
         {
             var key =
                 Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
@@ -72,7 +68,6 @@ namespace Repository
                 audience: jwtSettings.GetSection("validAudience").Value,
                 claims: claims,
                 expires:
-
                 DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings.GetSection("expires").Value)
                 ),
                 signingCredentials: signingCredentials

@@ -23,8 +23,6 @@ namespace Entities.Configuration
                     Dog = true,
                     Rodent = true,
                     Other = true
-                    
-                    
                 },
                 new Advertisement
                 {

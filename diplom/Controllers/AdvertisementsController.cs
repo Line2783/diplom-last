@@ -20,17 +20,13 @@ namespace diplom.Controllers
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
-
         public AdvertisementsController(IRepositoryManager repository, ILoggerManager logger,
             IMapper mapper)
-
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
-
-        }    
-        
+        }
         /// <summary>
         /// Получает список всех объявлений
         /// </summary>
@@ -43,9 +39,7 @@ namespace diplom.Controllers
             var advetrisemntsDto = _mapper.Map<IEnumerable<AdvertisementDto>>(advetrisemnts);
 
             return Ok(advetrisemntsDto);
-
         }
-        
         /// <summary>
         /// Получение информации одного объявления по Id
         /// </summary>
@@ -65,27 +59,6 @@ namespace diplom.Controllers
                 return Ok(advertisementDto);
             }
         }
-        [HttpGet("{hotelId}", Name = "GetAdvertisementForHotel")]
-        public async Task<IActionResult> GetAdvertisementForHotel(Guid hotelId, Guid id)
-        {
-            var hotel = await _repository.Hotel.GetHotelAsync(hotelId, trackChanges: false);
-            if (hotel == null)
-            {
-                _logger.LogInfo($"Hotel with id: {hotelId} doesn't exist in the database.");
-                return NotFound();
-            }
-            var advertisementDb = await _repository.Advertisement.GetAdvertisementAsync(hotelId, 
-                trackChanges:
-                false);
-            if (advertisementDb == null)
-            {
-                _logger.LogInfo($"Advertisement with id: {id} doesn't exist in the database.");
-                return NotFound();
-            }
-            var advertisement = _mapper.Map<AdvertisementDto>(advertisementDb);
-            return Ok(advertisement);
-        }
-        
         /// <summary>
         /// Создание объявления 
         /// </summary>
@@ -104,7 +77,6 @@ namespace diplom.Controllers
             return CreatedAtRoute("AdvertisementById", new { id = advertisementToReturn.Id },
                 advertisementToReturn);
         }
-        
         /// <summary>
         /// Удаление объявления 
         /// </summary>
@@ -117,7 +89,6 @@ namespace diplom.Controllers
             await _repository.SaveAsync();
             return NoContent();
         }
-        
         /// <summary>
         /// Редактирование объявления 
         /// </summary>
@@ -132,7 +103,6 @@ namespace diplom.Controllers
             await _repository.SaveAsync();
             return NoContent();
         }
-
     }
 }
     

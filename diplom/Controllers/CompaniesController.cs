@@ -46,6 +46,9 @@ namespace diplom.Controllers
             return Ok(companiesDto);
             
         }
+        /// <summary>
+        /// Получает компанию по Id
+        /// </summary>
         [HttpGet("{id}", Name = "CompanyById")]
         public async Task<IActionResult> GetCompany(Guid id)
         {
@@ -85,6 +88,9 @@ namespace diplom.Controllers
             return CreatedAtRoute("CompanyById", new { id = companyToReturn.Id },
                 companyToReturn);
         }
+        /// <summary>
+        /// Получение новой коллекции
+        /// </summary>
         [HttpGet("collection/({ids})", Name = "CompanyCollection")]
         public async Task<IActionResult> GetCompanyCollection(
             [ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
@@ -106,6 +112,9 @@ namespace diplom.Controllers
                 _mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
             return Ok(companiesToReturn);
         }
+        /// <summary>
+        /// Создает компанию и работника
+        /// </summary>
         [HttpPost("collection")]
         public async Task<IActionResult> CreateCompanyCollection(
             [FromBody] IEnumerable<CompanyForCreationDto> companyCollection)
@@ -127,7 +136,9 @@ namespace diplom.Controllers
             return CreatedAtRoute("CompanyCollection", new { ids },
                 companyCollectionToReturn);
         }
-        
+        /// <summary>
+        /// Удаление компнаии
+        /// </summary>
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateCompanyExistsAttribute))]
         public async Task<IActionResult> DeleteCompany(Guid id)
@@ -137,7 +148,9 @@ namespace diplom.Controllers
             await _repository.SaveAsync();
             return NoContent();
         }
-        
+        /// <summary>
+        /// Изменение компании
+        /// </summary>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateCompanyExistsAttribute))]

@@ -31,7 +31,9 @@ namespace diplom.Controllers
             _mapper = mapper;
             _dataShaper = dataShaper;
         }
-        
+        /// <summary>
+        /// Получение работников по заданным параметрам
+        /// </summary>
         [HttpGet]
         [HttpHead]
         public async Task<IActionResult> GetEmployeesForCompany(Guid companyId,
@@ -55,7 +57,9 @@ namespace diplom.Controllers
             return Ok(_dataShaper.ShapeData(employeesDto, employeeParameters.Fields));
 
         }
-        
+        /// <summary>
+        /// Получение работника компании
+        /// </summary>
         [HttpGet("{id}", Name = "GetEmployeeForCompany")]
         public async Task<IActionResult> GetEmployeeForCompany(Guid companyId, Guid id)
         {
@@ -77,6 +81,9 @@ namespace diplom.Controllers
             return Ok(employee);
         }
         
+        /// <summary>
+        /// Создание работника для компании
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> CreateEmployeeForCompany(Guid companyId, [FromBody]
             EmployeeForCreationDto employee)
@@ -106,6 +113,9 @@ namespace diplom.Controllers
                 companyId, id = employeeToReturn.Id
             }, employeeToReturn);
         }
+        /// <summary>
+        /// Удаление работника компании
+        /// </summary>
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateEmployeeForCompanyExistsAttribute))]
         public async Task<IActionResult> DeleteEmployeeForCompany(Guid companyId, Guid id)
@@ -115,6 +125,9 @@ namespace diplom.Controllers
             await _repository.SaveAsync();
             return NoContent();
         }
+        /// <summary>
+        /// Изменение работника компании
+        /// </summary>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateEmployeeForCompanyExistsAttribute))]

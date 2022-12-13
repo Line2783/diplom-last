@@ -31,9 +31,11 @@ namespace diplom.Controllers
         }
         
         
-        
+        /// <summary>
+        /// Получает список всех компаний
+        /// </summary>
+        /// <returns> Список компаний</returns>.
         [HttpGet(Name = "GetClients"), Authorize(Roles = "Manager")]
-
         public async Task<IActionResult> GetClients()
         {
             
@@ -45,6 +47,9 @@ namespace diplom.Controllers
             }
             
         }
+        /// <summary>
+        /// Получает клиента по Id
+        /// </summary>
         [HttpGet("{id}", Name = "ClientById")]
         public async Task<IActionResult> GetClient(Guid id)
         {
@@ -60,7 +65,14 @@ namespace diplom.Controllers
                 return Ok(clientDto);
             }
         }
-        
+        /// <summary>
+        /// Создает клиента
+        /// </summary>
+        /// <param name="company"></param>.
+        /// <returns>Созданный клиент</returns>.
+        /// <response code="201"> Возвращает только что созданный элемент</response>.
+        /// <response code="400"> Если элемент равен null</response>.
+        /// <код ответа="422"> Если модель недействительна</ответ>.
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateClient([FromBody] ClientForCreationDto client)
@@ -73,7 +85,9 @@ namespace diplom.Controllers
             return CreatedAtRoute("ClientById", new { id = clientToReturn.Id },
                 clientToReturn);
         }
-        
+        /// <summary>
+        /// Получение новой коллекции
+        /// </summary>
         [HttpGet("collection/({ids})", Name = "ClientCollection")]
         public async Task<IActionResult> GetClientCollection([ModelBinder(BinderType =
             typeof(ArrayModelBinder<>))] IEnumerable<Guid> ids)
@@ -94,7 +108,9 @@ namespace diplom.Controllers
                 _mapper.Map<IEnumerable<CompanyDto>>(clientEntities);
             return Ok(companiesToReturn);
         }
-        
+        /// <summary>
+        /// Создает нового клиента и его заказ(коллекция)
+        /// </summary>
         [HttpPost("collection")]
         public async Task<IActionResult> CreateClientCollection([FromBody]
             IEnumerable<ClientForCreationDto> clientCollection)
@@ -116,7 +132,9 @@ namespace diplom.Controllers
             return CreatedAtRoute("ClientCollection", new { ids },
                 clientCollectionToReturn);
         }
-        
+        /// <summary>
+        /// Удаление клиента
+        /// </summary>
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateClientExistsAttribute))]
         public async Task<IActionResult> DeleteClient(Guid id)
@@ -127,6 +145,9 @@ namespace diplom.Controllers
             await _repository.SaveAsync();
             return NoContent();
         }
+        /// <summary>
+        /// Изменение клиента
+        /// </summary>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateClientExistsAttribute))]

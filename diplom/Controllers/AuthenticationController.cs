@@ -29,7 +29,9 @@ namespace diplom.Controllers
         }
         
         
-        
+        /// <summary>
+        /// Регитрация пользователя
+        /// </summary>
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto
@@ -49,6 +51,9 @@ namespace diplom.Controllers
             await _userManager.AddToRolesAsync(user, userForRegistration.Roles);
             return StatusCode(201);
         }
+        /// <summary>
+        /// Аутентификация с получением токена
+        /// </summary>
         [HttpPost("login")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto

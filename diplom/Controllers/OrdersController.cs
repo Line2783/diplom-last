@@ -31,6 +31,9 @@ namespace diplom.Controllers
             _mapper = mapper;
             _dataShaper = dataShaper;
         }
+        /// <summary>
+        /// Получение заказов по заданным параметрам
+        /// </summary>
         [HttpGet]
         [HttpHead]
         public async Task<IActionResult> GetOrdersForClient(Guid clientId,
@@ -54,7 +57,9 @@ namespace diplom.Controllers
             return Ok(_dataShaper.ShapeData(ordersDto, orderParameters.Fields));
 
         }
-        
+        /// <summary>
+        /// Получение заказа клиента
+        /// </summary>
         [HttpGet("{id}", Name = "GetOrdersForClient")]
         public async Task<IActionResult> GetOrderForClient(Guid clientId, Guid id)
         {
@@ -75,6 +80,9 @@ namespace diplom.Controllers
             return Ok(ordersDto);
         }
         
+        /// <summary>
+        /// Создание заказа для клиента
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> CreateOrderForClient(Guid clientId, [FromBody]
             OrderForCreationDto order)
@@ -101,6 +109,9 @@ namespace diplom.Controllers
             }, orderToReturn);
         }
         
+        /// <summary>
+        /// Удаление заказа клиента
+        /// </summary>
         [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateOrderForClientExistsAttribute))]
         public async Task<IActionResult> DeleteOrderForClient(Guid clientId, Guid id)
@@ -110,6 +121,9 @@ namespace diplom.Controllers
             await _repository.SaveAsync();
             return NoContent();
         }
+        /// <summary>
+        /// Изменение заказа клиента
+        /// </summary>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateOrderForClientExistsAttribute))]

@@ -17,6 +17,7 @@ using diplom.ActionFilters;
 using diplom.Extensions;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 using Repository;
@@ -87,7 +88,7 @@ namespace diplom
             {
                 endpoints.MapControllers();
             });
-            
+
             app.UseSwagger();
             app.UseSwaggerUI(s =>
             {

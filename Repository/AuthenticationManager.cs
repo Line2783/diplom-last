@@ -8,6 +8,7 @@ using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -38,6 +39,8 @@ namespace Repository
             var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
+        
+        
         private SigningCredentials GetSigningCredentials()
         {
             var key =
@@ -74,5 +77,7 @@ namespace Repository
             );
             return tokenOptions;
         }
+        
+        
     }
 }

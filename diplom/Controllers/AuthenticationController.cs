@@ -87,37 +87,37 @@ namespace diplom.Controllers
             return Ok(new { Token = await _authManager.CreateToken(), });
         }
 
-        [HttpPost]
-        [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
-        {
-            if (ModelState.IsValid)
-            {
-                User user = await _userManager.FindByIdAsync(model.Email);
-                if (user != null)
-                {
-                    IdentityResult result =
-                        await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("");
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Пользователь не найден");
-                }
-            }
-
-            return StatusCode(201);
-        }
+        // [HttpPost]
+        // [HttpPost]
+        // public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         User user = await _userManager.FindByIdAsync(model.Email);
+        //         if (user != null)
+        //         {
+        //             IdentityResult result =
+        //                 await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+        //             if (result.Succeeded)
+        //             {
+        //                 return RedirectToAction("");
+        //             }
+        //             else
+        //             {
+        //                 foreach (var error in result.Errors)
+        //                 {
+        //                     ModelState.AddModelError(string.Empty, error.Description);
+        //                 }
+        //             }
+        //         }
+        //         else
+        //         {
+        //             ModelState.AddModelError(string.Empty, "Пользователь не найден");
+        //         }
+        //     }
+        //
+        //     return StatusCode(201);
+        // }
         [HttpPost("ResetPassword")]
         public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordDto resetPasswordDto)
         {
@@ -145,9 +145,61 @@ namespace diplom.Controllers
             var result = await _userManager.ChangePasswordAsync(user, resetPasswordDto.CurrentPassword, resetPasswordDto.NewPassword);
             if (!result.Succeeded)
             {
-                //throw exception......
+                return BadRequest();
             }
             return Ok();
+        }
+        
+        [HttpPost("ResetPassword3")]
+        public async Task<IActionResult> ChangePassword3(ResetPasswordDto resetPasswordDto)
+        {           
+            if (!ModelState.IsValid)
+                return BadRequest();
+        
+            var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);          
+            if (user == null)
+                return BadRequest("Invalid Request");
+        
+            var result = await _userManager.ChangePasswordAsync(user, resetPasswordDto.CurrentPassword, resetPasswordDto.NewPassword);
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(e => e.Description);
+        
+                return BadRequest(new { Errors = errors });
+            }
+        
+            return Ok();
+        }
+        
+        [HttpPost("ResetPassword4")]
+        public async Task<IActionResult> ChangePassword4(ResetPasswordDto resetPasswordDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);          
+                if (user != null)
+                {
+                    var result = await _userManager.ChangePasswordAsync(user, resetPasswordDto.CurrentPassword, resetPasswordDto.NewPassword);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Пользователь не найден");
+                }
+            }
+
+            return StatusCode(201);
         }
     }
 }

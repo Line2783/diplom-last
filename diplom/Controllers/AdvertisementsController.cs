@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
@@ -20,6 +23,7 @@ namespace diplom.Controllers
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
+
         public AdvertisementsController(IRepositoryManager repository, ILoggerManager logger,
             IMapper mapper)
         {
@@ -27,6 +31,7 @@ namespace diplom.Controllers
             _logger = logger;
             _mapper = mapper;
         }
+
         /// <summary>
         /// Получает список всех объявлений
         /// </summary>
@@ -40,6 +45,7 @@ namespace diplom.Controllers
 
             return Ok(advetrisemntsDto);
         }
+
         /// <summary>
         /// Получение информации одного объявления по Id
         /// </summary>
@@ -59,6 +65,7 @@ namespace diplom.Controllers
                 return Ok(advertisementDto);
             }
         }
+
         /// <summary>
         /// Создание объявления 
         /// </summary>
@@ -77,10 +84,11 @@ namespace diplom.Controllers
             return CreatedAtRoute("AdvertisementById", new { id = advertisementToReturn.Id },
                 advertisementToReturn);
         }
+
         /// <summary>
         /// Удаление объявления 
         /// </summary>
-        [HttpDelete("{id}")] 
+        [HttpDelete("{id}")]
         [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]
         public async Task<IActionResult> DeleteAdvertisement(Guid id)
         {
@@ -89,20 +97,92 @@ namespace diplom.Controllers
             await _repository.SaveAsync();
             return NoContent();
         }
+
         /// <summary>
         /// Редактирование объявления 
         /// </summary>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]
-        public async Task<IActionResult> UpdateAdvertisement(Guid id, [FromBody]
-            AdvertisementForUpdateDto advertisement)
+        public async Task<IActionResult> UpdateAdvertisement(Guid id,
+            [FromBody] AdvertisementForUpdateDto advertisement)
         {
             var advertisementEntity = HttpContext.Items["advertisement"] as Advertisement;
             _mapper.Map(advertisement, advertisementEntity);
             await _repository.SaveAsync();
             return NoContent();
         }
+
+        // public async Task<IActionResult> OnPostUploadAsync()
+        // {
+        //     using (var memoryStream = new MemoryStream())
+        //     {
+        //         await FileUpload.FormFile.CopyToAsync(memoryStream);
+        //
+        //         // Upload the file if less than 2 MB
+        //         if (memoryStream.Length < 2097152)
+        //         {
+        //             var file = new AppFile()
+        //             {
+        //                 Content = memoryStream.ToArray()
+        //             };
+        //
+        //             _repository.File.Add(file);
+        //
+        //             await _repository.SaveChangesAsync();
+        //         }
+        //         else
+        //         {
+        //             ModelState.AddModelError("File", "The file is too large.");
+        //         }
+        //     }
+        //
+        //     return Page();
+        // }
+
+
+        //     [Route("api/ImageAPI/UploadFiles")]
+        //     [HttpPost]
+        //     public HttpResponseMessage UploadFiles()
+        //     {
+        //         //Create the Directory.
+        //         string path = HttpContext.Current.Server.MapPath("~/Uploads/");
+        //         if (!Directory.Exists(path))
+        //         {
+        //             Directory.CreateDirectory(path);
+        //         }
+        //
+        //         //Fetch the File.
+        //         HttpPostedFile postedFile = HttpContext.Current.Request.Files[0];
+        //
+        //         //Fetch the File Name.
+        //         string fileName = Path.GetFileName(postedFile.FileName);
+        //
+        //         //Save the File.
+        //         postedFile.SaveAs(path + fileName);
+        //
+        //         //Send OK Response to Client.
+        //         return Request.CreateResponse(HttpStatusCode.OK, fileName);
+        //     }
+        //
+        //     [HttpPost]
+        //     [Route("api/ImageAPI/GetFiles")]
+        //     public HttpResponseMessage GetFiles()
+        //     {
+        //         string path = HttpContext.Current.Server.MapPath("~/Uploads/");
+        //
+        //         //Fetch the Image Files.
+        //         List<string> images = new List<string>();
+        //
+        //         //Extract only the File Names to save data.
+        //         foreach (string file in Directory.GetFiles(path))
+        //         {
+        //             images.Add(Path.GetFileName(file));
+        //         }
+        //
+        //         return Request.CreateResponse(HttpStatusCode.OK, images);
+        //     }
+        // }
     }
 }
     

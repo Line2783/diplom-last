@@ -32,6 +32,7 @@ namespace Entities.Models
         [Required(ErrorMessage = "Advertisement other is a required field.")]
         public Boolean Other { get; set; }
         
+        
         public Guid HotelId { get; set; }
         public Hotel Hotel { get; set; }
     }

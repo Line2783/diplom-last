@@ -1,4 +1,7 @@
 ﻿using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
@@ -100,6 +103,35 @@ namespace diplom.Controllers
             return Ok();
         }
         
+        // public HttpResponseMessage Get()
+        // {
+        //     if (User.Identity.IsAuthenticated)
+        //     {
+        //         authMessage = $"{User.Identity.Name} is authenticated.";
+        //         claims = user.Claims;
+        //         surname = user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value;
+        //     }
+        //     else
+        //     {
+        //         authMessage = "The user is NOT authenticated.";
+        //     }
+        //
+        // }
+        
+        [HttpPost("ChangeEmail")]
+        public async Task<IActionResult> ChangeEmail(ChangeEmailDto changeEmailDto)
+        {           
+            var user = await _userManager.FindByEmailAsync(changeEmailDto.CurrentEmail);          
+            var result = await _userManager.ChangeEmailAsync(user, changeEmailDto.CurrentEmail,changeEmailDto.NewEmail);
+            if (!result.Succeeded)
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+       
+       
+            
         
         
         

@@ -23,5 +23,12 @@ namespace Repository
         public async Task<Hotel> GetHotelAsync(Guid hotelId, bool trackChanges) =>
             await FindByCondition(c => c.Id.Equals(hotelId), trackChanges)
                 .SingleOrDefaultAsync();
+        
+        public async Task<IEnumerable<Hotel>> GetByIdsAsync(IEnumerable<Guid> ids, bool
+            trackChanges) =>
+            await FindByCondition(x => ids.Contains(x.Id), trackChanges)
+                .ToListAsync();
+        
+        public void CreateHotel(Hotel hotel) => Create(hotel);
     }
 }

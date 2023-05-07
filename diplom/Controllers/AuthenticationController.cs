@@ -11,6 +11,7 @@ using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace diplom.Controllers
 {
@@ -129,6 +130,9 @@ namespace diplom.Controllers
             }
             return Ok();
         }
+        
+        
+        
        
        
             

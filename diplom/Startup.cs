@@ -61,6 +61,8 @@ namespace diplom
             services.ConfigureSwagger();
             services.AddScoped<ValidateAdvertisementForHotelExistsAttribute>();
             services.AddScoped<ValidateAdvertisementExistsAttribute>();
+            services.AddScoped<ValidateHotelExistsAttribute>();
+
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
@@ -107,6 +109,8 @@ namespace diplom
                 CreateMap<Advertisement, AdvertisementDto>();
                 CreateMap<AdvertisementForCreationDto, Advertisement>();
                 CreateMap<AdvertisementForUpdateDto, Advertisement>();
+                CreateMap<HotelForUpdateDto, Hotel>();
+                CreateMap<HotelForCreationDto, Hotel>();
             }
         }
     }

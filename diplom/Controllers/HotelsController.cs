@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
+using diplom.ActionFilters;
 using Entities.DataTransferObjects;
+using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,6 +61,19 @@ namespace diplom.Controllers
                 var hotelDto = _mapper.Map<HotelDto>(hotel);
                 return Ok(hotelDto);
             }
+        }
+        
+        
+        [HttpPut("{id}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        [ServiceFilter(typeof(ValidateHotelExistsAttribute))]
+        public async Task<IActionResult> UpdateHotel(Guid id,
+            [FromBody] HotelForUpdateDto hotel)
+        {
+            var hotelEntity = HttpContext.Items["hotel"] as Hotel;
+            _mapper.Map(hotel, hotelEntity);
+            await _repository.SaveAsync();
+            return NoContent();
         }
     }
 }

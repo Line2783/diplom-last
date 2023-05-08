@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
@@ -91,19 +92,21 @@ namespace diplom.Controllers
             return Ok(new { Token = await _authManager.CreateToken(), });
         }
 
-        
+
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ResetPasswordDto resetPasswordDto)
-        {           
-            var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);          
-            var result = await _userManager.ChangePasswordAsync(user, resetPasswordDto.CurrentPassword, resetPasswordDto.NewPassword);
+        {
+            var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+            var result = await _userManager.ChangePasswordAsync(user, resetPasswordDto.CurrentPassword,
+                resetPasswordDto.NewPassword);
             if (!result.Succeeded)
             {
                 return BadRequest();
             }
+
             return Ok();
         }
-        
+
         // public HttpResponseMessage Get()
         // {
         //     if (User.Identity.IsAuthenticated)
@@ -118,30 +121,53 @@ namespace diplom.Controllers
         //     }
         //
         // }
-        
-        
+
+
         /// <summary>
         /// Проверка авторизации пользователя
         /// </summary>
         /// <returns></returns>
         [HttpGet("CheckAuthorization")]
         public async Task<IActionResult> CheckAuthorization()
-        {           
+        {
             if (User.Identity.IsAuthenticated)
             {
                 return Ok();
             }
+
             return BadRequest();
         }
-        
-        
-        
-       
-       
+        /// <summary>
+        /// Редактирование почты и имя пользователя по id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="email"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> EditUserByIdAsync(string id, string email, string userName)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            user.UserName = userName;
+            user.Email = email;
             
-        
-        
-        
+            await _userManager.UpdateAsync(user);
+
+            return Ok();
+
+        }
+        /*[HttpPut("1231")]
+        public async Task<IActionResult> EditUserByIdAsync1()
+        {
+            var user = _userManager.FindByIdAsync(User.Identity.());
+            user.UserName = ;
+            user.UserName = email;
+
+            var updateResult = await _userManager.UpdateAsync(user);
+
+        }*/
     }
 }
     

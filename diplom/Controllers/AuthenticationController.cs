@@ -119,16 +119,19 @@ namespace diplom.Controllers
         //
         // }
         
-        [HttpPost("ChangeEmail")]
-        public async Task<IActionResult> ChangeEmail(ChangeEmailDto changeEmailDto)
+        
+        /// <summary>
+        /// Проверка авторизации пользователя
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("CheckAuthorization")]
+        public async Task<IActionResult> CheckAuthorization()
         {           
-            var user = await _userManager.FindByEmailAsync(changeEmailDto.CurrentEmail);          
-            var result = await _userManager.ChangeEmailAsync(user, changeEmailDto.CurrentEmail,changeEmailDto.NewEmail);
-            if (!result.Succeeded)
+            if (User.Identity.IsAuthenticated)
             {
-                return BadRequest();
+                return Ok();
             }
-            return Ok();
+            return BadRequest();
         }
         
         

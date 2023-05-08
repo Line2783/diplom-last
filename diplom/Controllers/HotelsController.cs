@@ -63,7 +63,12 @@ namespace diplom.Controllers
             }
         }
         
-        
+        /// <summary>
+        /// Изменение информации об отеле по ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="hotel"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateHotelExistsAttribute))]

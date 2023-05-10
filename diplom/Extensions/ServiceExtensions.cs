@@ -10,6 +10,7 @@ using Entities.Models;
 using LoggerService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -78,6 +79,8 @@ namespace diplom.Extensions
                 builder.Services);
             builder.AddEntityFrameworkStores<RepositoryContext>()
                 .AddDefaultTokenProviders();
+            
+            
         }
         
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration

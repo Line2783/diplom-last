@@ -9,6 +9,7 @@ using Contracts;
 using diplom.ActionFilters;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -80,19 +81,23 @@ namespace diplom.Controllers
 
         [HttpPost("login")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto
-            user)
+        public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
         {
-            if (!await _authManager.ValidateUser(user))
+            var userRoles = await _authManager.ValidateUser(user);
+            if (userRoles == null)
             {
                 _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wrong Email or password.");
                 return Unauthorized();
             }
 
-            return Ok(new { Token = await _authManager.CreateToken(), });
+            return Ok(new { Token = await _authManager.CreateToken(), Role = userRoles}); // TODO
         }
 
-
+/// <summary>
+///  Метод изменения пароля
+/// </summary>
+/// <param name="resetPasswordDto"></param>
+/// <returns></returns>
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ResetPasswordDto resetPasswordDto)
         {
@@ -101,10 +106,10 @@ namespace diplom.Controllers
                 resetPasswordDto.NewPassword);
             if (!result.Succeeded)
             {
-                return BadRequest();
+                return BadRequest( new { Error = "" }); //todo
             }
 
-            return Ok();
+            return NoContent();
         }
 
         // public HttpResponseMessage Get()
@@ -132,7 +137,7 @@ namespace diplom.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return Ok();
+                return NoContent();
             }
 
             return BadRequest();
@@ -144,7 +149,7 @@ namespace diplom.Controllers
         /// <param name="email"></param>
         /// <param name="userName"></param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(Roles = "User")]
 
         public async Task<IActionResult> EditUserByIdAsync(string id, string email, string userName)
         {

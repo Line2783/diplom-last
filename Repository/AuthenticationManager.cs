@@ -26,11 +26,19 @@ namespace Repository
             _configuration = configuration;
             
         }
-        public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
+        public async Task<IList<string>?> ValidateUser(UserForAuthenticationDto userForAuth)
         {
             _user = await _userManager.FindByEmailAsync(userForAuth.Email);
-            return (_user != null && await _userManager.CheckPasswordAsync(_user,
-                userForAuth.Password));
+            var userRoles = await  _userManager.GetRolesAsync(_user);
+            
+            if (_user != null && await _userManager.CheckPasswordAsync(_user,
+                                       userForAuth.Password))
+            {
+                return userRoles;
+            }
+            return null;
+            
+          
         }
         public async Task<string> CreateToken()
         {

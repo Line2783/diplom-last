@@ -12,6 +12,7 @@ using Entities.Models;
 using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 
 namespace diplom.Controllers
@@ -141,29 +142,29 @@ namespace diplom.Controllers
         // }
 
 
-        //     [Route("api/ImageAPI/UploadFiles")]
-        //     [HttpPost]
-        //     public HttpResponseMessage UploadFiles()
+        // [Route("api/ImageAPI/UploadFiles")]
+        // [HttpPost]
+        // public HttpResponseMessage UploadFiles()
+        // {
+        //     //Create the Directory.
+        //     string path = HttpContext.Current.Server.MapPath("~/Uploads/");
+        //     if (!Directory.Exists(path))
         //     {
-        //         //Create the Directory.
-        //         string path = HttpContext.Current.Server.MapPath("~/Uploads/");
-        //         if (!Directory.Exists(path))
-        //         {
-        //             Directory.CreateDirectory(path);
-        //         }
-        //
-        //         //Fetch the File.
-        //         HttpPostedFile postedFile = HttpContext.Current.Request.Files[0];
-        //
-        //         //Fetch the File Name.
-        //         string fileName = Path.GetFileName(postedFile.FileName);
-        //
-        //         //Save the File.
-        //         postedFile.SaveAs(path + fileName);
-        //
-        //         //Send OK Response to Client.
-        //         return Request.CreateResponse(HttpStatusCode.OK, fileName);
+        //         Directory.CreateDirectory(path);
         //     }
+        //
+        //     //Fetch the File.
+        //     HttpPostedFile postedFile = HttpContext.Current.Request.Files[0];
+        //
+        //     //Fetch the File Name.
+        //     string fileName = Path.GetFileName(postedFile.FileName);
+        //
+        //     //Save the File.
+        //     postedFile.SaveAs(path + fileName);
+        //
+        //     //Send OK Response to Client.
+        //     return Request.CreateResponse(HttpStatusCode.OK, fileName);
+        // }
         //
         //     [HttpPost]
         //     [Route("api/ImageAPI/GetFiles")]

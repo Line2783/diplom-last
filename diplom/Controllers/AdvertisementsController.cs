@@ -186,6 +186,12 @@ namespace diplom.Controllers
         //     }
         // }
         
+        /// <summary>
+        /// Добавление изображения для объявления
+        /// </summary>
+        /// <param name="idAdvertisement"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
         [HttpPost("{idAdvertisement}")]
         public async Task<IActionResult> AddPhoto(Guid idAdvertisement, IFormFile uploadedFile)
         {

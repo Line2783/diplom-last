@@ -93,11 +93,11 @@ namespace diplom.Controllers
             return Ok(new { Token = await _authManager.CreateToken(), Role = userRoles}); // TODO
         }
 
-/// <summary>
-///  Метод изменения пароля
-/// </summary>
-/// <param name="resetPasswordDto"></param>
-/// <returns></returns>
+        /// <summary>
+        ///  Метод изменения пароля
+        /// </summary>
+        /// <param name="resetPasswordDto"></param>
+        /// <returns></returns>
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword(ResetPasswordDto resetPasswordDto)
         {
@@ -106,10 +106,10 @@ namespace diplom.Controllers
                 resetPasswordDto.NewPassword);
             if (!result.Succeeded)
             {
-                return BadRequest( new { Error = "" }); //todo
+                return BadRequest( new { Error = "Password change failed. Incorrect email or password" }); //todo
             }
 
-            return NoContent();
+            return NoContent(); 
         }
 
         // public HttpResponseMessage Get()
@@ -140,7 +140,7 @@ namespace diplom.Controllers
                 return NoContent();
             }
 
-            return BadRequest();
+            return BadRequest( new { Error = "You are not authorized!" });
         }
         /// <summary>
         /// Редактирование почты и имя пользователя по id
@@ -160,7 +160,7 @@ namespace diplom.Controllers
             
             await _userManager.UpdateAsync(user);
 
-            return Ok();
+            return NoContent();
 
         }
         /*[HttpPut("1231")]

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Contracts;
 using diplom.ActionFilters;
+using diplom.Service;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Entities.RequestFeatures;
@@ -184,6 +185,39 @@ namespace diplom.Controllers
         //         return Request.CreateResponse(HttpStatusCode.OK, images);
         //     }
         // }
+        
+        [HttpPost("{idAdvertisement}")]
+        public async Task<IActionResult> AddPhoto(Guid idAdvertisement, IFormFile uploadedFile)
+        {
+            var productPhoto1 = new ProductPhoto
+            {
+                Id = Guid.NewGuid(),
+                AdvertisementId = idAdvertisement,
+                Name = uploadedFile.FileName
+            };
+            using (var binaryReader = new BinaryReader(uploadedFile.OpenReadStream()))
+            {
+                productPhoto1.Photo = binaryReader.ReadBytes((int)uploadedFile.Length);
+            }
+
+            await _repository.ProductPhoto.SaveFilesAsync(productPhoto1);
+            await _repository.ProductPhoto.SaveRepositoryAsync();
+
+            return await GetPhoto(productPhoto1.Id);
+        }
+
+        /// <summary>
+        /// Получение изображения продукта
+        /// </summary>
+        /// <param name="imageId">id фото</param>
+        /// <returns></returns>
+        [HttpGet("/photo/{imageId}", Name = "GetPhoto")]
+        public async Task<IActionResult> GetPhoto(Guid imageId)
+        {
+            var file = await _repository.ProductPhoto.GetFileAsync(imageId, false);
+            var stream = new MemoryStream(file.Photo);
+            return File(stream, "application/octet-stream", $"{file.Name}");
+        }
         
         
         

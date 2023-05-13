@@ -23,7 +23,9 @@ namespace Entities
         
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Advertisement> Advertisements { get; set; }
+        public DbSet<ProductPhoto> ProductPhotos { get; set; }
         
+
 
 
 

@@ -9,6 +9,8 @@ namespace Repository
         private RepositoryContext _repositoryContext;
         private IHotelRepository _hotelRepository;
         private IAdvertisementRepository _advertisementRepository;
+        private IProductPhotoRepository _productPhotoRepository;
+
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
@@ -31,6 +33,17 @@ namespace Repository
                 return _advertisementRepository;
             }
         }
+        
+        public IProductPhotoRepository ProductPhoto
+        {
+            get
+            {
+                if (_productPhotoRepository == null)
+                    _productPhotoRepository = new ProductPhotoRepository(_repositoryContext);
+                return _productPhotoRepository;
+            }
+        }
+
         public void Save() => _repositoryContext.SaveChanges();
         public Task SaveAsync() => _repositoryContext.SaveChangesAsync();
 

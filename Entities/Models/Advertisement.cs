@@ -34,12 +34,15 @@ namespace Entities.Models
         [Required(ErrorMessage = "Advertisement other is a required field.")]
         public Boolean Other { get; set; }
         
+        public ICollection<ProductPhoto> Image { get; set; }
+
         // public List<Animals> AnimalsList { get; set; }
-        
+        //public ICollection<ProductPhoto> Image { get; set; }
 
         
         public Guid HotelId { get; set; }
         public Hotel Hotel { get; set; }
+        
     }
 
     // public enum Animals

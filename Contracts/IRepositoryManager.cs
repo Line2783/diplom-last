@@ -6,6 +6,7 @@ namespace Contracts
     {
         IHotelRepository Hotel { get; }
         IAdvertisementRepository Advertisement { get; }
+        IProductPhotoRepository ProductPhoto { get; }
         void Save();
         Task SaveAsync();
 

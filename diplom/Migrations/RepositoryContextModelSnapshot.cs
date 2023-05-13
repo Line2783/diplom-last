@@ -103,145 +103,6 @@ namespace diplom.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Entities.Models.Client", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("ClientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
-
-                    b.Property<string>("Age")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("80515d34-f56c-4e0d-85a9-1e3ebde9abda"),
-                            Address = "Atemar, house, 125",
-                            Age = "20",
-                            Name = "Sergey Shatrov"
-                        },
-                        new
-                        {
-                            Id = new Guid("167e2f3a-3c45-452a-b59e-130eaa101d50"),
-                            Address = "Atemar, house, 126",
-                            Age = "22",
-                            Name = "Sergey Falileev"
-                        });
-                });
-
-            modelBuilder.Entity("Entities.Models.Company", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
-
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870"),
-                            Address = "583 Wall Dr. Gwynn Oak, MD 21207",
-                            Country = "USA",
-                            Name = "IT_Solutions Ltd"
-                        },
-                        new
-                        {
-                            Id = new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3"),
-                            Address = "312 Forest Avenue, BF 923",
-                            Country = "USA",
-                            Name = "Admin_Solutions Ltd"
-                        });
-                });
-
-            modelBuilder.Entity("Entities.Models.Employee", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.ToTable("Employees");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
-                            Age = 26,
-                            CompanyId = new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870"),
-                            Name = "Sam Raiden",
-                            Position = "Software developer"
-                        },
-                        new
-                        {
-                            Id = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
-                            Age = 30,
-                            CompanyId = new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870"),
-                            Name = "Jana McLeaf",
-                            Position = "Software developer"
-                        },
-                        new
-                        {
-                            Id = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
-                            Age = 35,
-                            CompanyId = new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3"),
-                            Name = "Kane Miller",
-                            Position = "Administrator"
-                        });
-                });
-
             modelBuilder.Entity("Entities.Models.Hotel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -283,51 +144,27 @@ namespace diplom.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Entities.Models.Order", b =>
+            modelBuilder.Entity("Entities.Models.ProductPhoto", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("OrderId")
+                        .HasColumnName("PhotoId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ClientId")
+                    b.Property<Guid>("AdvertisementId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Cost")
-                        .HasColumnType("int")
-                        .HasMaxLength(20);
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Product")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("AdvertisementId");
 
-                    b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("b9fc089c-463a-47d5-9763-1bd0a94f1f03"),
-                            ClientId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Cost = 3000,
-                            Product = "Oil Motul",
-                            Quantity = 3
-                        },
-                        new
-                        {
-                            Id = new Guid("92a60611-bff8-487f-ab72-7c27a073fd19"),
-                            ClientId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Cost = 1500,
-                            Product = "Oil Ralf",
-                            Quantity = 1
-                        });
+                    b.ToTable("ProductPhotos");
                 });
 
             modelBuilder.Entity("Entities.Models.User", b =>
@@ -430,15 +267,15 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d33e4e25-c6c0-4383-b6c6-f0ee26daef75",
-                            ConcurrencyStamp = "c82ba501-fab1-4d0a-bc99-8542be74e54e",
+                            Id = "469cf8b7-867e-48a1-b39b-9cf9c1fd9e31",
+                            ConcurrencyStamp = "86c1d785-8d38-4515-914a-f35a1f97203d",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "fb4420bf-e4ed-4d2b-bff7-8da63d1c93da",
-                            ConcurrencyStamp = "bf07fc9c-4edb-4b8f-9261-7785d553cb73",
+                            Id = "6132ff43-df4d-4d52-956e-0a8db368150e",
+                            ConcurrencyStamp = "77831273-bf07-498d-b991-c8b2d842138c",
                             Name = "Companyy",
                             NormalizedName = "COMPANYY"
                         });
@@ -557,20 +394,11 @@ namespace diplom.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Entities.Models.Employee", b =>
+            modelBuilder.Entity("Entities.Models.ProductPhoto", b =>
                 {
-                    b.HasOne("Entities.Models.Company", "Company")
-                        .WithMany("Employees")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entities.Models.Order", b =>
-                {
-                    b.HasOne("Entities.Models.Client", "Client")
-                        .WithMany("Orders")
-                        .HasForeignKey("ClientId")
+                    b.HasOne("Entities.Models.Advertisement", "Advertisement")
+                        .WithMany("Image")
+                        .HasForeignKey("AdvertisementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

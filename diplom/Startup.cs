@@ -15,6 +15,7 @@ using AutoMapper;
 using Contracts;
 using diplom.ActionFilters;
 using diplom.Extensions;
+using diplom.Service;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Http;
@@ -63,7 +64,7 @@ namespace diplom
             services.AddScoped<ValidateAdvertisementForHotelExistsAttribute>();
             services.AddScoped<ValidateAdvertisementExistsAttribute>();
             services.AddScoped<ValidateHotelExistsAttribute>();
-
+ 
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)

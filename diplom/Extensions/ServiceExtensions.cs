@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using Contracts;
 using diplom.Controllers;
+using diplom.Service;
 using Entities;
 using Entities.Models;
 using LoggerService;
@@ -51,6 +52,11 @@ namespace diplom.Extensions
         public static void ConfigureRepositoryManager(this IServiceCollection services)
             =>
                 services.AddScoped<IRepositoryManager, RepositoryManager>();
+        
+        
+        public static void ConfigureServiceManager(this IServiceCollection services)
+            =>
+                services.AddTransient<IProductPhotoService, ProductPhotoService>();
         
         
         public static void ConfigureVersioning(this IServiceCollection services)

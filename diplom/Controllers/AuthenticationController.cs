@@ -34,7 +34,11 @@ namespace diplom.Controllers
             _userManager = userManager;
             _authManager = authManager;
         }
-
+        /// <summary>
+        /// Регистрация пользователя
+        /// </summary>
+        /// <param name="userForRegistration"></param>
+        /// <returns></returns>
         [HttpPost("registrationUser")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto
@@ -56,7 +60,11 @@ namespace diplom.Controllers
             await _userManager.AddToRolesAsync(user, userForRegistration.Roles);
             return StatusCode(201);
         }
-
+        /// <summary>
+        /// Регистрация компании
+        /// </summary>
+        /// <param name="companyyForRegistration"></param>
+        /// <returns></returns>
         [HttpPost("registrationCompanyy")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterCompanyy([FromBody] CompanyyForRegistrationDto
@@ -78,7 +86,11 @@ namespace diplom.Controllers
             await _userManager.AddToRolesAsync(user, companyyForRegistration.Roles);
             return StatusCode(201);
         }
-
+        /// <summary>
+        /// Авторизация
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost("login")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
@@ -94,7 +106,7 @@ namespace diplom.Controllers
         }
 
         /// <summary>
-        ///  Метод изменения пароля
+        /// Изменения пароля
         /// </summary>
         /// <param name="resetPasswordDto"></param>
         /// <returns></returns>
@@ -142,37 +154,71 @@ namespace diplom.Controllers
 
             return BadRequest( new { Error = "You are not authorized!" });
         }
+        // /// <summary>
+        // /// Редактирование почты и имя пользователя по id
+        // /// </summary>
+        // /// <param name="id"></param>
+        // /// <param name="email"></param>
+        // /// <param name="userName"></param>
+        // /// <returns></returns>
+        // [HttpPut("{id}"), Authorize(Roles = "User")]
+        //
+        // public async Task<IActionResult> EditUserByIdAsync(string id, string email, string userName)
+        // {
+        //     var user = await _userManager.FindByIdAsync(id);
+        //
+        //     user.UserName = userName;
+        //     user.Email = email;
+        //     
+        //     await _userManager.UpdateAsync(user);
+        //
+        //     return NoContent();
+        //
+        // }
+        
         /// <summary>
-        /// Редактирование почты и имя пользователя по id
+        /// Редактирование почты пользователя по Id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="email"></param>
-        /// <param name="userName"></param>
         /// <returns></returns>
-        [HttpPut("{id}"), Authorize(Roles = "User")]
-
-        public async Task<IActionResult> EditUserByIdAsync(string id, string email, string userName)
+        [HttpPut("ChangeEmail/{id}"), ]
+        
+        public async Task<IActionResult> ChangeEmailByIdAsync(string id, string email)
         {
             var user = await _userManager.FindByIdAsync(id);
-
-            user.UserName = userName;
+        
             user.Email = email;
             
             await _userManager.UpdateAsync(user);
-
+        
             return NoContent();
-
+        
         }
-        /*[HttpPut("1231")]
-        public async Task<IActionResult> EditUserByIdAsync1()
+       
+        /// <summary>
+        /// Редактирование имя пользователя пользователя по Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        [HttpPut("ChangeUserName/{id}"), ]
+        
+        public async Task<IActionResult> ChangeUserNameByIdAsync(string id,  string userName)
         {
-            var user = _userManager.FindByIdAsync(User.Identity.());
-            user.UserName = ;
-            user.UserName = email;
-
-            var updateResult = await _userManager.UpdateAsync(user);
-
-        }*/
+            var user = await _userManager.FindByIdAsync(id);
+        
+            user.UserName = userName;
+            
+            await _userManager.UpdateAsync(user);
+        
+            return NoContent();
+        
+        }
+        
+        
+        
+        
     }
 }
     

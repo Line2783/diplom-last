@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -79,6 +80,45 @@ namespace diplom.Controllers
             _mapper.Map(hotel, hotelEntity);
             await _repository.SaveAsync();
             return NoContent();
+        }
+        
+        /// <summary>
+        /// Добавление изображения для отеля
+        /// </summary>
+        /// <param name="idHotel"></param>
+        /// <param name="uploadedFile"></param>
+        /// <returns></returns>
+        [HttpPost("{idHotel}")]
+        public async Task<IActionResult> AddPhoto(Guid idHotel, IFormFile uploadedFile)
+        {
+            var productPhoto1 = new HotelPhoto
+            {
+                Id = Guid.NewGuid(),
+                HotelId = idHotel,
+                Name = uploadedFile.FileName
+            };
+            using (var binaryReader = new BinaryReader(uploadedFile.OpenReadStream()))
+            {
+                productPhoto1.Photo = binaryReader.ReadBytes((int)uploadedFile.Length);
+            }
+
+            await _repository.HotelPhoto.SaveFilesAsync(productPhoto1);
+            await _repository.HotelPhoto.SaveRepositoryAsync();
+
+            return await GetPhoto(productPhoto1.Id);
+        }
+
+        /// <summary>
+        /// Получение изображения отеля
+        /// </summary>
+        /// <param name="imageId">id фото</param>
+        /// <returns></returns>
+        [HttpGet("/HotelPhoto/{imageId}", Name = "GetHotelPhoto")]
+        public async Task<IActionResult> GetPhoto(Guid imageId)
+        {
+            var file = await _repository.HotelPhoto.GetFileAsync(imageId, false);
+            var stream = new MemoryStream(file.Photo);
+            return File(stream, "application/octet-stream", $"{file.Name}");
         }
     }
 }

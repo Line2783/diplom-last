@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace diplom.Migrations
 {
-    public partial class fsdfdsa1221 : Migration
+    public partial class last11 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -191,6 +191,26 @@ namespace diplom.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HotelsPhotos",
+                columns: table => new
+                {
+                    PhotoId = table.Column<Guid>(nullable: false),
+                    HotelId = table.Column<Guid>(nullable: false),
+                    Photo = table.Column<byte[]>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HotelsPhotos", x => x.PhotoId);
+                    table.ForeignKey(
+                        name: "FK_HotelsPhotos_Hotels_HotelId",
+                        column: x => x.HotelId,
+                        principalTable: "Hotels",
+                        principalColumn: "HotelId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductPhotos",
                 columns: table => new
                 {
@@ -224,8 +244,8 @@ namespace diplom.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "469cf8b7-867e-48a1-b39b-9cf9c1fd9e31", "86c1d785-8d38-4515-914a-f35a1f97203d", "User", "USER" },
-                    { "6132ff43-df4d-4d52-956e-0a8db368150e", "77831273-bf07-498d-b991-c8b2d842138c", "Companyy", "COMPANYY" }
+                    { "b6077f27-df79-40aa-bbc2-1f77ec6c8838", "5c8e0bfe-1eaf-4b4c-9b00-a7823ebf29f6", "User", "USER" },
+                    { "92adb839-a025-415d-9e7a-0cd3392520ab", "676e8c04-cf31-4b51-9fc3-377fa6f2ca46", "Companyy", "COMPANYY" }
                 });
 
             migrationBuilder.InsertData(
@@ -282,6 +302,11 @@ namespace diplom.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HotelsPhotos_HotelId",
+                table: "HotelsPhotos",
+                column: "HotelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductPhotos_AdvertisementId",
                 table: "ProductPhotos",
                 column: "AdvertisementId");
@@ -303,6 +328,9 @@ namespace diplom.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "HotelsPhotos");
 
             migrationBuilder.DropTable(
                 name: "ProductPhotos");

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace diplom.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230513090312_fsdfdsa1221")]
-    partial class fsdfdsa1221
+    [Migration("20230514094433_last11")]
+    partial class last11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -146,6 +146,29 @@ namespace diplom.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Entities.Models.HotelPhoto", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("PhotoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("HotelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HotelId");
+
+                    b.ToTable("HotelsPhotos");
+                });
+
             modelBuilder.Entity("Entities.Models.ProductPhoto", b =>
                 {
                     b.Property<Guid>("Id")
@@ -269,15 +292,15 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "469cf8b7-867e-48a1-b39b-9cf9c1fd9e31",
-                            ConcurrencyStamp = "86c1d785-8d38-4515-914a-f35a1f97203d",
+                            Id = "b6077f27-df79-40aa-bbc2-1f77ec6c8838",
+                            ConcurrencyStamp = "5c8e0bfe-1eaf-4b4c-9b00-a7823ebf29f6",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "6132ff43-df4d-4d52-956e-0a8db368150e",
-                            ConcurrencyStamp = "77831273-bf07-498d-b991-c8b2d842138c",
+                            Id = "92adb839-a025-415d-9e7a-0cd3392520ab",
+                            ConcurrencyStamp = "676e8c04-cf31-4b51-9fc3-377fa6f2ca46",
                             Name = "Companyy",
                             NormalizedName = "COMPANYY"
                         });
@@ -391,6 +414,15 @@ namespace diplom.Migrations
                 {
                     b.HasOne("Entities.Models.Hotel", "Hotel")
                         .WithMany("Advertisements")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Models.HotelPhoto", b =>
+                {
+                    b.HasOne("Entities.Models.Hotel", "Hotel")
+                        .WithMany("Image")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

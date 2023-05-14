@@ -213,7 +213,7 @@ namespace diplom.Controllers
         }
 
         /// <summary>
-        /// Получение изображения продукта
+        /// Получение изображения объявления
         /// </summary>
         /// <param name="imageId">id фото</param>
         /// <returns></returns>

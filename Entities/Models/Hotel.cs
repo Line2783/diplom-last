@@ -18,6 +18,7 @@ namespace Entities.Models
         [Required(ErrorMessage = "HotelName is required")]
         public string HotelName { get; set; }
         public ICollection<Advertisement> Advertisements { get; set; }
+        public ICollection<HotelPhoto> Image { get; set; }
 
     }
 }

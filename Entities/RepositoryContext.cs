@@ -11,6 +11,7 @@ namespace Entities
             : base(options)
         {
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -20,11 +21,12 @@ namespace Entities
             modelBuilder.ApplyConfiguration(new AdvertisementConfiguration());
 
         }
-        
+
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Advertisement> Advertisements { get; set; }
         public DbSet<ProductPhoto> ProductPhotos { get; set; }
-        
+        public DbSet<HotelPhoto> HotelsPhotos { get; set; }
+
 
 
 

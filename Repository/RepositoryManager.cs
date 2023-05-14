@@ -10,6 +10,7 @@ namespace Repository
         private IHotelRepository _hotelRepository;
         private IAdvertisementRepository _advertisementRepository;
         private IProductPhotoRepository _productPhotoRepository;
+        private IHotelPhotoRepository _hotelPhotoRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
         {
@@ -41,6 +42,15 @@ namespace Repository
                 if (_productPhotoRepository == null)
                     _productPhotoRepository = new ProductPhotoRepository(_repositoryContext);
                 return _productPhotoRepository;
+            }
+        }
+        public IHotelPhotoRepository HotelPhoto
+        {
+            get
+            {
+                if (_hotelPhotoRepository == null)
+                    _hotelPhotoRepository = new HotelPhotoRepository(_repositoryContext);
+                return _hotelPhotoRepository;
             }
         }
 

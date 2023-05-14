@@ -11,6 +11,7 @@ using diplom.Service;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Entities.RequestFeatures;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
@@ -71,7 +72,7 @@ namespace diplom.Controllers
         /// <summary>
         /// Создание объявления 
         /// </summary>
-        [HttpPost(Name = "CreateAdvertisement")]
+        [HttpPost(Name = "CreateAdvertisement"), Authorize(Roles = "Companyy")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(422)]
@@ -90,7 +91,7 @@ namespace diplom.Controllers
         /// <summary>
         /// Удаление объявления 
         /// </summary>
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Roles = "Companyy")]
         [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]
         public async Task<IActionResult> DeleteAdvertisement(Guid id)
         {
@@ -103,7 +104,7 @@ namespace diplom.Controllers
         /// <summary>
         /// Редактирование объявления 
         /// </summary>
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(Roles = "Companyy")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]
         public async Task<IActionResult> UpdateAdvertisement(Guid id,
@@ -115,76 +116,7 @@ namespace diplom.Controllers
             return NoContent();
         }
 
-        // public async Task<IActionResult> OnPostUploadAsync()
-        // {
-        //     using (var memoryStream = new MemoryStream())
-        //     {
-        //         await FileUpload.FormFile.CopyToAsync(memoryStream);
-        //
-        //         // Upload the file if less than 2 MB
-        //         if (memoryStream.Length < 2097152)
-        //         {
-        //             var file = new AppFile()
-        //             {
-        //                 Content = memoryStream.ToArray()
-        //             };
-        //
-        //             _repository.File.Add(file);
-        //
-        //             await _repository.SaveChangesAsync();
-        //         }
-        //         else
-        //         {
-        //             ModelState.AddModelError("File", "The file is too large.");
-        //         }
-        //     }
-        //
-        //     return Page();
-        // }
-
-
-        // [Route("api/ImageAPI/UploadFiles")]
-        // [HttpPost]
-        // public HttpResponseMessage UploadFiles()
-        // {
-        //     //Create the Directory.
-        //     string path = HttpContext.Current.Server.MapPath("~/Uploads/");
-        //     if (!Directory.Exists(path))
-        //     {
-        //         Directory.CreateDirectory(path);
-        //     }
-        //
-        //     //Fetch the File.
-        //     HttpPostedFile postedFile = HttpContext.Current.Request.Files[0];
-        //
-        //     //Fetch the File Name.
-        //     string fileName = Path.GetFileName(postedFile.FileName);
-        //
-        //     //Save the File.
-        //     postedFile.SaveAs(path + fileName);
-        //
-        //     //Send OK Response to Client.
-        //     return Request.CreateResponse(HttpStatusCode.OK, fileName);
-        // }
-        //
-        //     [HttpPost]
-        //     [Route("api/ImageAPI/GetFiles")]
-        //     public HttpResponseMessage GetFiles()
-        //     {
-        //         string path = HttpContext.Current.Server.MapPath("~/Uploads/");
-        //
-        //         //Fetch the Image Files.
-        //         List<string> images = new List<string>();
-        //
-        //         //Extract only the File Names to save data.
-        //         foreach (string file in Directory.GetFiles(path))
-        //         {
-        //             images.Add(Path.GetFileName(file));
-        //         }
-        //
-        //         return Request.CreateResponse(HttpStatusCode.OK, images);
-        //     }
-        // }
+        
         
         /// <summary>
         /// Добавление изображения для объявления
@@ -192,7 +124,7 @@ namespace diplom.Controllers
         /// <param name="idAdvertisement"></param>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
-        [HttpPost("{idAdvertisement}")]
+        [HttpPost("{idAdvertisement}"), Authorize(Roles = "Companyy")]
         public async Task<IActionResult> AddPhoto(Guid idAdvertisement, IFormFile uploadedFile)
         {
             var productPhoto1 = new ProductPhoto

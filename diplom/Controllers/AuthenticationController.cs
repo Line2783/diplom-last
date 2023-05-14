@@ -110,7 +110,7 @@ namespace diplom.Controllers
         /// </summary>
         /// <param name="resetPasswordDto"></param>
         /// <returns></returns>
-        [HttpPost("ChangePassword")]
+        [HttpPost("ChangePassword"), Authorize(Roles = "User, Companyy")]
         public async Task<IActionResult> ChangePassword(ResetPasswordDto resetPasswordDto)
         {
             var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
@@ -124,20 +124,7 @@ namespace diplom.Controllers
             return NoContent(); 
         }
 
-        // public HttpResponseMessage Get()
-        // {
-        //     if (User.Identity.IsAuthenticated)
-        //     {
-        //         authMessage = $"{User.Identity.Name} is authenticated.";
-        //         claims = user.Claims;
-        //         surname = user.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value;
-        //     }
-        //     else
-        //     {
-        //         authMessage = "The user is NOT authenticated.";
-        //     }
-        //
-        // }
+       
 
 
         /// <summary>
@@ -154,27 +141,7 @@ namespace diplom.Controllers
 
             return BadRequest( new { Error = "You are not authorized!" });
         }
-        // /// <summary>
-        // /// Редактирование почты и имя пользователя по id
-        // /// </summary>
-        // /// <param name="id"></param>
-        // /// <param name="email"></param>
-        // /// <param name="userName"></param>
-        // /// <returns></returns>
-        // [HttpPut("{id}"), Authorize(Roles = "User")]
-        //
-        // public async Task<IActionResult> EditUserByIdAsync(string id, string email, string userName)
-        // {
-        //     var user = await _userManager.FindByIdAsync(id);
-        //
-        //     user.UserName = userName;
-        //     user.Email = email;
-        //     
-        //     await _userManager.UpdateAsync(user);
-        //
-        //     return NoContent();
-        //
-        // }
+        
         
         /// <summary>
         /// Редактирование почты пользователя по Id
@@ -182,7 +149,7 @@ namespace diplom.Controllers
         /// <param name="id"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        [HttpPut("ChangeEmail/{id}"), ]
+        [HttpPut("ChangeEmail/{id}"), Authorize(Roles = "User, Companyy") ]
         
         public async Task<IActionResult> ChangeEmailByIdAsync(string id, string email)
         {
@@ -202,7 +169,7 @@ namespace diplom.Controllers
         /// <param name="id"></param>
         /// <param name="userName"></param>
         /// <returns></returns>
-        [HttpPut("ChangeUserName/{id}"), ]
+        [HttpPut("ChangeUserName/{id}"), Authorize(Roles = "User, Companyy")]
         
         public async Task<IActionResult> ChangeUserNameByIdAsync(string id,  string userName)
         {

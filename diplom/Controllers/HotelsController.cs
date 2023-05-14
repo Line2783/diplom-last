@@ -8,6 +8,7 @@ using Contracts;
 using diplom.ActionFilters;
 using Entities.DataTransferObjects;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -70,7 +71,7 @@ namespace diplom.Controllers
         /// <param name="id"></param>
         /// <param name="hotel"></param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(Roles = "Companyy")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateHotelExistsAttribute))]
         public async Task<IActionResult> UpdateHotel(Guid id,
@@ -88,7 +89,7 @@ namespace diplom.Controllers
         /// <param name="idHotel"></param>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
-        [HttpPost("{idHotel}")]
+        [HttpPost("{idHotel}"), Authorize(Roles = "Companyy")]
         public async Task<IActionResult> AddPhoto(Guid idHotel, IFormFile uploadedFile)
         {
             var productPhoto1 = new HotelPhoto

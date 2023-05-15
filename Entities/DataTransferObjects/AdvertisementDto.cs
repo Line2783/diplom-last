@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Entities.Models;
 
 namespace Entities.DataTransferObjects
 {
@@ -24,5 +26,8 @@ namespace Entities.DataTransferObjects
         
         public Boolean Other { get; set; }
         
+        public ICollection<ProductPhoto> Image { get; set; }
+        
+
     }
 }

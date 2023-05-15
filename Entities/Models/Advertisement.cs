@@ -20,10 +20,10 @@ namespace Entities.Models
         [MaxLength(60, ErrorMessage = "Maximum length for rhe Address is 60 character")]
         public string Address { get; set; }
         [Required(ErrorMessage = "Advertisement description is a required field.")]
-        [MaxLength(60, ErrorMessage = "Maximum length for rhe Address is 60 character")]
+        [MaxLength(150, ErrorMessage = "Maximum length for rhe Address is 60 character")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Advertisement number is a required field.")]
-        [MaxLength(60, ErrorMessage = "Maximum length for rhe Address is 60 character")]
+       // [MaxLength(60, ErrorMessage = "Maximum length for rhe Address is 60 character")]
         public string Number { get; set; }
         [Required(ErrorMessage = "Advertisement cat is a required field.")]
         public Boolean Cat { get; set; }

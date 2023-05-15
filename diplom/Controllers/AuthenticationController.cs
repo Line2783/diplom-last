@@ -19,7 +19,7 @@ namespace diplom.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : BaseController
     {
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
@@ -101,6 +101,7 @@ namespace diplom.Controllers
                 _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wrong Email or password.");
                 return Unauthorized();
             }
+            
 
             return Ok(new { Token = await _authManager.CreateToken(), Role = userRoles}); // TODO
         }
@@ -127,19 +128,37 @@ namespace diplom.Controllers
        
 
 
-        /// <summary>
-        /// Проверка авторизации пользователя
-        /// </summary>
-        /// <returns></returns>
+        // /// <summary>
+        // /// Проверка авторизации пользователя
+        // /// </summary>
+        // /// <returns></returns>
+        // [HttpGet("CheckAuthorization")]
+        // public async Task<IActionResult> CheckAuthorization()
+        // {
+        //     
+        //     if (User.Identity.IsAuthenticated)
+        //     {
+        //         return Ok(User);
+        //     }
+        //
+        //     return BadRequest( new { Error = "You are not authorized!" });
+        // }
+        
         [HttpGet("CheckAuthorization")]
         public async Task<IActionResult> CheckAuthorization()
         {
+           // var user1 = await _userManager.FindByIdAsync(UserId.ToString());
+           // var u = _userManager.Users.First(p => p.Id = UserId.ToString());
+            var u = await _userManager.Users.FirstAsync(p => p.Id == UserId.ToString());
+
+            
+
             if (User.Identity.IsAuthenticated)
             {
-                return NoContent();
+                return Ok(u);
             }
-
-            return BadRequest( new { Error = "You are not authorized!" });
+        
+            return Unauthorized( new { Error = "You are not authorized!" });
         }
         
         

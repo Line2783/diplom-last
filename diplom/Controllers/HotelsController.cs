@@ -16,7 +16,7 @@ namespace diplom.Controllers
 {
     [Route("api/hotels")]
     [ApiController]
-    public class HotelsController : ControllerBase
+    public class HotelsController : BaseController
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;

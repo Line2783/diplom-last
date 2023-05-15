@@ -60,7 +60,7 @@ namespace Repository
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, _user.Email)
+                new Claim(ClaimTypes.Name, _user.Id)
             };
             var roles = await _userManager.GetRolesAsync(_user);
             foreach (var role in roles)

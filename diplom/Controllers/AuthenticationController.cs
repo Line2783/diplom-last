@@ -155,7 +155,7 @@ namespace diplom.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                return Ok(u);
+               return Ok(u);
             }
         
             return Unauthorized( new { Error = "You are not authorized!" });

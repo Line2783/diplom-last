@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -44,7 +45,10 @@ namespace diplom.Controllers
         {
             var advetrisemnts = await _repository.Advertisement.GetAllAdvertisementsAsync(trackChanges:
                 false);
+               //advetrisemnts.ToList().First().Image.First().Id;
             var advetrisemntsDto = _mapper.Map<IEnumerable<AdvertisementDto>>(advetrisemnts);
+
+                //var result =  advetrisemnts.Select(AdvertisementDto.Map);
 
             return Ok(advetrisemntsDto);
         }

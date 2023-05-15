@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace diplom.Migrations
 {
-    public partial class last11 : Migration
+    public partial class _143123d : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -176,8 +176,8 @@ namespace diplom.Migrations
                     Name = table.Column<string>(maxLength: 60, nullable: false),
                     City = table.Column<string>(maxLength: 60, nullable: false),
                     Address = table.Column<string>(maxLength: 60, nullable: false),
-                    Description = table.Column<string>(maxLength: 60, nullable: false),
-                    Number = table.Column<string>(maxLength: 60, nullable: false),
+                    Description = table.Column<string>(maxLength: 150, nullable: false),
+                    Number = table.Column<string>(nullable: false),
                     Cat = table.Column<bool>(nullable: false),
                     Dog = table.Column<bool>(nullable: false),
                     Rodent = table.Column<bool>(nullable: false),
@@ -244,8 +244,8 @@ namespace diplom.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "b6077f27-df79-40aa-bbc2-1f77ec6c8838", "5c8e0bfe-1eaf-4b4c-9b00-a7823ebf29f6", "User", "USER" },
-                    { "92adb839-a025-415d-9e7a-0cd3392520ab", "676e8c04-cf31-4b51-9fc3-377fa6f2ca46", "Companyy", "COMPANYY" }
+                    { "18e7f470-3f7a-4506-9693-cf27987c2b45", "126b2784-e165-4164-8e1c-f0528f3d9394", "User", "USER" },
+                    { "dcacb154-8ab2-4482-b100-7b82b49dca5a", "ca32b121-f8e0-49ae-98ce-6482ff81187a", "Companyy", "COMPANYY" }
                 });
 
             migrationBuilder.InsertData(

@@ -35,7 +35,8 @@ namespace Entities.Models
         public Boolean Other { get; set; }
         
         public ICollection<ProductPhoto> Image { get; set; }
-
+        
+        //public List<ProductPhoto> Image { get; set; }
         // public List<Animals> AnimalsList { get; set; }
         //public ICollection<ProductPhoto> Image { get; set; }
 

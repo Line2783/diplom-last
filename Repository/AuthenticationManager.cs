@@ -19,6 +19,8 @@ namespace Repository
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
         private User _user;
+
+        //public static readonly string Key = Guid.NewGuid().ToString();
         public AuthenticationManager(UserManager<User> userManager,  IConfiguration
             configuration)
         {
@@ -55,6 +57,10 @@ namespace Repository
                 Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
             var secret = new SymmetricSecurityKey(key);
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
+            // var key =
+            //     Encoding.UTF8.GetBytes(Key);
+            // var secret = new SymmetricSecurityKey(key);
+            // return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
         private async Task<List<Claim>> GetClaims()
         {

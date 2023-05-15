@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace diplom.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230514094433_last11")]
-    partial class last11
+    [Migration("20230515140327_143123d")]
+    partial class _143123d
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,8 +43,8 @@ namespace diplom.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
+                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(150);
 
                     b.Property<bool>("Dog")
                         .HasColumnType("bit");
@@ -59,8 +59,7 @@ namespace diplom.Migrations
 
                     b.Property<string>("Number")
                         .IsRequired()
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Other")
                         .HasColumnType("bit");
@@ -292,15 +291,15 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b6077f27-df79-40aa-bbc2-1f77ec6c8838",
-                            ConcurrencyStamp = "5c8e0bfe-1eaf-4b4c-9b00-a7823ebf29f6",
+                            Id = "18e7f470-3f7a-4506-9693-cf27987c2b45",
+                            ConcurrencyStamp = "126b2784-e165-4164-8e1c-f0528f3d9394",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "92adb839-a025-415d-9e7a-0cd3392520ab",
-                            ConcurrencyStamp = "676e8c04-cf31-4b51-9fc3-377fa6f2ca46",
+                            Id = "dcacb154-8ab2-4482-b100-7b82b49dca5a",
+                            ConcurrencyStamp = "ca32b121-f8e0-49ae-98ce-6482ff81187a",
                             Name = "Companyy",
                             NormalizedName = "COMPANYY"
                         });

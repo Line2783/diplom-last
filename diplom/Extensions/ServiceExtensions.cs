@@ -93,7 +93,7 @@ namespace diplom.Extensions
             configuration)
         {
             var jwtSettings = configuration.GetSection("JwtSettings");
-            var secretKey = "mysupersecret_secretkey!123";
+            var secretKey = "mysupersecret_secretkey!123"; // !!!!!
             services.AddAuthentication(opt =>
                 {
                     opt.DefaultAuthenticateScheme =

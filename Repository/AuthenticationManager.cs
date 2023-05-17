@@ -51,11 +51,10 @@ namespace Repository
         }
         
         
-        private SigningCredentials GetSigningCredentials()
+        private SigningCredentials GetSigningCredentials()      
         {
-            var key =
-                Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SECRET"));
-            var secret = new SymmetricSecurityKey(key);
+            var key = "mysupersecret_secretkey!123";
+            var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
             // var key =
             //     Encoding.UTF8.GetBytes(Key);

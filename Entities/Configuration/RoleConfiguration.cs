@@ -16,8 +16,8 @@ namespace Entities.Configuration
                 },
                 new IdentityRole
                 {
-                    Name = "Companyy",
-                    NormalizedName = "COMPANYY"
+                    Name = "Company",
+                    NormalizedName = "COMPANY"
                 }
             );
         }

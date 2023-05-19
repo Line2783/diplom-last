@@ -17,8 +17,8 @@ namespace Entities
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
-            modelBuilder.ApplyConfiguration(new HotelConfiguration());
-            modelBuilder.ApplyConfiguration(new AdvertisementConfiguration());
+            // modelBuilder.ApplyConfiguration(new HotelConfiguration());
+            // modelBuilder.ApplyConfiguration(new AdvertisementConfiguration());
 
         }
 

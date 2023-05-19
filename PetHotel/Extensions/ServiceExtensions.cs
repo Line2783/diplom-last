@@ -46,8 +46,11 @@ namespace diplom.Extensions
         public static void ConfigureSqlContext(this IServiceCollection services,
             IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(opts =>
-                opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => 
-                    b.MigrationsAssembly("diplom")));
+                // opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => 
+                //     b.MigrationsAssembly("PetHotel")));
+                opts.UseMySql(configuration.GetConnectionString("sqlConnection"),
+                    new MySqlServerVersion(new Version(8, 0, 27)),
+                    b => b.MigrationsAssembly("PetHoteldiplom")));
         
         public static void ConfigureRepositoryManager(this IServiceCollection services)
             =>

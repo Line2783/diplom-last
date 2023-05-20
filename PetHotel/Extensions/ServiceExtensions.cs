@@ -50,7 +50,7 @@ namespace diplom.Extensions
                 //     b.MigrationsAssembly("PetHotel")));
                 opts.UseMySql(configuration.GetConnectionString("sqlConnection"),
                     new MySqlServerVersion(new Version(8, 0, 27)),
-                    b => b.MigrationsAssembly("PetHoteldiplom")));
+                    b => b.MigrationsAssembly("PetHotel")));
         
         public static void ConfigureRepositoryManager(this IServiceCollection services)
             =>

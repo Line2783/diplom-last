@@ -12,12 +12,12 @@ namespace diplom
         {
             var host = CreateHostBuilder(args).Build();
 
-            using (var serviceScope = host.Services.CreateScope())
-            {
-                // Создание БД из миграции
-                var context = serviceScope.ServiceProvider.GetRequiredService<RepositoryContext>();
-                context.Database.Migrate();
-            }
+            // using (var serviceScope = host.Services.CreateScope())
+            // {
+            //     // Создание БД из миграции
+            //     var context = serviceScope.ServiceProvider.GetRequiredService<RepositoryContext>();
+            //     context.Database.Migrate();
+            // }
 
             host.Run();
         }

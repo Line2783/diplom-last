@@ -118,7 +118,6 @@ namespace diplom.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // work work todo
-        [Authorize]
         [HttpDelete("advertisement/{id}"), Authorize(Roles = "Companyy")]
         [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]
         public async Task<IActionResult> DeleteAdvertisement1(Guid id)

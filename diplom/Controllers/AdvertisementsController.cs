@@ -31,29 +31,23 @@ namespace diplom.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
 
-      //  private readonly IDataShaper<AdvertisementDto> _dataShaper;
-
-
         public AdvertisementsController(IRepositoryManager repository, ILoggerManager logger,  UserManager<User> userManager,
-            IMapper mapper)// IDataShaper<AdvertisementDto> dataShaper)
+            IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
-           // _dataShaper = dataShaper;
            _userManager = userManager;
 
         }
-        
 
-        
         /// <summary>
         /// Создание объявления
         /// </summary>
         /// <param name="advertisement"></param>
         /// <returns></returns>
-        [Authorize] //work work todo
-        [HttpPost("create-advertisement")]
+         //work work todo
+        [HttpPost("create-advertisement"), Authorize(Roles = "Companyy")]
         public async Task<IActionResult> CreateAdvertisement([FromBody] AdvertisementForCreationDto advertisement)
         {
             try
@@ -89,8 +83,8 @@ namespace diplom.Controllers
         /// <param name="id"></param>
         /// <param name="advertisement"></param>
         /// <returns></returns>
-        [Authorize] // work work todo
-        [HttpPut("advertisement/{id}")]
+         // work work todo
+        [HttpPut("advertisement/{id}"), Authorize(Roles = "Companyy")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]
         public async Task<IActionResult> UpdateAdvertisement1(Guid id, [FromBody] AdvertisementForUpdateDto advertisement)
@@ -125,7 +119,7 @@ namespace diplom.Controllers
         /// <returns></returns>
         // work work todo
         [Authorize]
-        [HttpDelete("advertisement/{id}")]
+        [HttpDelete("advertisement/{id}"), Authorize(Roles = "Companyy")]
         [ServiceFilter(typeof(ValidateAdvertisementExistsAttribute))]
         public async Task<IActionResult> DeleteAdvertisement1(Guid id)
         {
@@ -229,7 +223,7 @@ namespace diplom.Controllers
         /// <param name="idAdvertisement"></param>
         /// <param name="uploadedFile"></param>
         /// <returns></returns>
-        [HttpPost("{idAdvertisement}")]//, Authorize(Roles = "Companyy")]
+        [HttpPost("{idAdvertisement}"), Authorize(Roles = "Companyy")]
         public async Task<IActionResult> AddPhoto(Guid idAdvertisement, IFormFile uploadedFile)
         {
             var productPhoto1 = new ProductPhoto

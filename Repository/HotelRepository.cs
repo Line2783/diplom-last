@@ -15,24 +15,7 @@ namespace Repository
             : base(repositoryContext)
         {
         }
-        // public async Task<IEnumerable<Companyy>> GetAllHotelsAsync(bool trackChanges)
-        //     => await FindAll(trackChanges)
-        //         .OrderBy(c => c.HotelName)
-        //         .ToListAsync();
         
-        // public async Task<IEnumerable<User>> GetAllHotelsAsync(bool trackChanges)
-        // {
-        //     return await FindAll(trackChanges).ToListAsync();
-        // }
-        //
-        // public async Task<User> GetHotelAsync(Guid hotelId, bool trackChanges) =>
-        //     await FindByCondition(c => c.Id.Equals(hotelId), trackChanges)
-        //         .SingleOrDefaultAsync();
-        //
-        // public async Task<IEnumerable<User>> GetByIdsAsync(IEnumerable<Guid> ids, bool
-        //     trackChanges) =>
-        //     await FindByCondition(x => ids.Contains(x.Id), trackChanges)
-        //         .ToListAsync();
         
         public async Task<IEnumerable<User>> GetAllCompaniesAsync(bool trackChanges)
         {

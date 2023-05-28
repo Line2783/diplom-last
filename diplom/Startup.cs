@@ -62,9 +62,8 @@ namespace diplom
             services.ConfigureJWT(Configuration);
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.ConfigureSwagger();
-           // services.AddScoped<ValidateAdvertisementForHotelExistsAttribute>();
+           
             services.AddScoped<ValidateAdvertisementExistsAttribute>();
-           // services.AddScoped<ValidateHotelExistsAttribute>();
             
             services.AddScoped <IDataShaper<AdvertisementDto>, DataShaper<AdvertisementDto>>(); 
 
@@ -117,9 +116,6 @@ namespace diplom
                 CreateMap<AdvertisementForCreationDto, Advertisement>();
                 CreateMap<AdvertisementForUpdateDto, Advertisement>();
                 CreateMap<Companyy, CompanyDto>();
-                // CreateMap<HotelForUpdateDto, Hotel>();
-                // CreateMap<HotelForCreationDto, Hotel>();
-                //CreateMap<UserInfoDto, User>();
                 CreateMap<User, CompanyDto>();
                 CreateMap<CompanyDto, Companyy>();
                 CreateMap<CompanyForUpdateDto, User>();

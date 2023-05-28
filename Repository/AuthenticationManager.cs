@@ -20,8 +20,6 @@ namespace Repository
 
         private readonly IConfiguration _configuration;
         private User _user;
-
-        //public static readonly string Key = Guid.NewGuid().ToString();
         public AuthenticationManager(UserManager<User> userManager,  IConfiguration
             configuration)
         {
@@ -57,10 +55,7 @@ namespace Repository
             var key = "mysupersecret_secretkey!123";
             var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
-            // var key =
-            //     Encoding.UTF8.GetBytes(Key);
-            // var secret = new SymmetricSecurityKey(key);
-            // return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
+            
         }
         private async Task<List<Claim>> GetClaims()
         {

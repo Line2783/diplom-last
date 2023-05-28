@@ -15,6 +15,6 @@ namespace Entities.Models
         public string INN { get; set; }
         [Required(ErrorMessage = "HotelName is required")]
         public string HotelName { get; set; }
-        public ICollection<Advertisement> Advertisements { get; set; } // свойство навигации для объявлений
+        public ICollection<Advertisement> Advertisements { get; set; } 
     }
 }

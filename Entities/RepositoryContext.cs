@@ -16,13 +16,11 @@ namespace Entities
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
-
-            // modelBuilder.ApplyConfiguration(new HotelConfiguration());
             modelBuilder.ApplyConfiguration(new AdvertisementConfiguration());
 
         }
 
-        // public DbSet<Hotel> Hotels { get; set; }
+        
         public DbSet<Companyy> Companyies { get; set; }
         public DbSet<User> Users{ get; set; }
         public DbSet<Advertisement> Advertisements { get; set; }

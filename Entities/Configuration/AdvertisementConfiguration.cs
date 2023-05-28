@@ -9,36 +9,7 @@ namespace Entities.Configuration
     {
         public void Configure(EntityTypeBuilder<Advertisement> builder)
         {
-            // builder.HasData
-            // (
-            //     new Advertisement
-            //     {
-            //         Id = new Guid("933e8244-d563-476c-b820-5c6587b6235a"),
-            //         Name = "LoveYourPats",
-            //         City = "Saransk",
-            //         Address = "Bolshevistskaya street,68",
-            //         Description = "Loves your pats very much",
-            //         Number = "89271478520",
-            //         Cat = true,
-            //         Dog = true,
-            //         Rodent = true,
-            //         Other = true,
-            //     },
-            //     new Advertisement
-            //     {
-            //         Id = new Guid("3e3502fd-1f09-40a9-818a-6f35cd6d43fa"),
-            //         Name = "LoveYourCats",
-            //         City = "Saransk",
-            //         Address = "Bolshevistskaya street,69",
-            //         Description = "Loves your cats so very much:)",
-            //         Number = "89271478520",
-            //         Cat = true,
-            //         Dog = false,
-            //         Rodent = false,
-            //         Other = false,
-            //
-            //     }
-            // );
+            
         }  
     }
 }

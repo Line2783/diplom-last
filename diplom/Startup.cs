@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.FileProviders;
 using NLog;
 using Repository;
+using Repository.DataShaper;
 
 namespace diplom
 {
@@ -61,9 +62,12 @@ namespace diplom
             services.ConfigureJWT(Configuration);
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.ConfigureSwagger();
-            services.AddScoped<ValidateAdvertisementForHotelExistsAttribute>();
+           // services.AddScoped<ValidateAdvertisementForHotelExistsAttribute>();
             services.AddScoped<ValidateAdvertisementExistsAttribute>();
-            services.AddScoped<ValidateHotelExistsAttribute>();
+           // services.AddScoped<ValidateHotelExistsAttribute>();
+            
+            services.AddScoped <IDataShaper<AdvertisementDto>, DataShaper<AdvertisementDto>>(); 
+
  
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,13 +112,20 @@ namespace diplom
             {
                 CreateMap<UserForRegistrationDto, User>();
                 CreateMap<CompanyyForRegistrationDto, User>();
-                CreateMap<Hotel, HotelDto>();
+                CreateMap<Companyy, HotelDto>();
                 CreateMap<Advertisement, AdvertisementDto>();
                 CreateMap<AdvertisementForCreationDto, Advertisement>();
                 CreateMap<AdvertisementForUpdateDto, Advertisement>();
-                CreateMap<HotelForUpdateDto, Hotel>();
-                CreateMap<HotelForCreationDto, Hotel>();
-                CreateMap<UserInfoDto, User>();
+                CreateMap<Companyy, CompanyDto>();
+                // CreateMap<HotelForUpdateDto, Hotel>();
+                // CreateMap<HotelForCreationDto, Hotel>();
+                //CreateMap<UserInfoDto, User>();
+                CreateMap<User, CompanyDto>();
+                CreateMap<CompanyDto, Companyy>();
+                CreateMap<CompanyForUpdateDto, User>();
+                CreateMap<ProductPhoto, AdvertisementDto>().ReverseMap();
+                CreateMap<ProductPhoto, Advertisement>().ReverseMap();
+
             }
         }
     }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace diplom.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230515140327_143123d")]
-    partial class _143123d
+    [Migration("20230528150920_28482482")]
+    partial class _28482482
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace diplom.Migrations
 
             modelBuilder.Entity("Entities.Models.Advertisement", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("AdvertisementId")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AdvertisementId")
                         .HasColumnType("uniqueidentifier");
@@ -41,6 +41,12 @@ namespace diplom.Migrations
                         .HasColumnType("nvarchar(60)")
                         .HasMaxLength(60);
 
+                    b.Property<string>("CompanyId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CompanyyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(150)")
@@ -48,9 +54,6 @@ namespace diplom.Migrations
 
                     b.Property<bool>("Dog")
                         .HasColumnType("bit");
-
-                    b.Property<Guid>("HotelId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -67,53 +70,30 @@ namespace diplom.Migrations
                     b.Property<bool>("Rodent")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.HasKey("AdvertisementId");
 
-                    b.HasIndex("HotelId");
+                    b.HasIndex("CompanyyId");
 
                     b.ToTable("Advertisements");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("933e8244-d563-476c-b820-5c6587b6235a"),
-                            Address = "Bolshevistskaya street,68",
-                            Cat = true,
-                            City = "Saransk",
-                            Description = "Loves your pats very much",
-                            Dog = true,
-                            HotelId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "LoveYourPats",
-                            Number = "89271478520",
-                            Other = true,
-                            Rodent = true
-                        },
-                        new
-                        {
-                            Id = new Guid("3e3502fd-1f09-40a9-818a-6f35cd6d43fa"),
-                            Address = "Bolshevistskaya street,69",
-                            Cat = true,
-                            City = "Saransk",
-                            Description = "Loves your cats so very much:)",
-                            Dog = false,
-                            HotelId = new Guid("00000000-0000-0000-0000-000000000000"),
-                            Name = "LoveYourCats",
-                            Number = "89271478520",
-                            Other = false,
-                            Rodent = false
-                        });
                 });
 
-            modelBuilder.Entity("Entities.Models.Hotel", b =>
+            modelBuilder.Entity("Entities.Models.Companyy", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("HotelId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("HotelName")
                         .IsRequired()
@@ -124,48 +104,39 @@ namespace diplom.Migrations
                         .HasColumnType("nvarchar(12)")
                         .HasMaxLength(12);
 
-                    b.HasKey("Id");
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
 
-                    b.ToTable("Hotels");
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("099153b0-3e4d-46f4-893e-e90c5589bc84"),
-                            Email = "hellopet@mail.ru",
-                            HotelName = "LoveYourPets",
-                            INN = "147258963101"
-                        },
-                        new
-                        {
-                            Id = new Guid("052678b7-7705-4910-ac55-30e7a224b76d"),
-                            Email = "getpet@gmail.com",
-                            HotelName = "WishesPet",
-                            INN = "512369874121"
-                        });
-                });
-
-            modelBuilder.Entity("Entities.Models.HotelPhoto", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("PhotoId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("HotelId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Photo")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HotelId");
-
-                    b.ToTable("HotelsPhotos");
+                    b.ToTable("Companyies");
                 });
 
             modelBuilder.Entity("Entities.Models.ProductPhoto", b =>
@@ -291,15 +262,15 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "18e7f470-3f7a-4506-9693-cf27987c2b45",
-                            ConcurrencyStamp = "126b2784-e165-4164-8e1c-f0528f3d9394",
+                            Id = "6b2f5e82-0498-4841-b005-95fe555678d8",
+                            ConcurrencyStamp = "551dd7c2-7131-4758-9978-fe3b66151f2e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "dcacb154-8ab2-4482-b100-7b82b49dca5a",
-                            ConcurrencyStamp = "ca32b121-f8e0-49ae-98ce-6482ff81187a",
+                            Id = "62d86ba0-ec47-486a-9ee4-e76e7518e81a",
+                            ConcurrencyStamp = "b05d615e-435b-48af-9ea7-557578a4d6fd",
                             Name = "Companyy",
                             NormalizedName = "COMPANYY"
                         });
@@ -411,26 +382,15 @@ namespace diplom.Migrations
 
             modelBuilder.Entity("Entities.Models.Advertisement", b =>
                 {
-                    b.HasOne("Entities.Models.Hotel", "Hotel")
+                    b.HasOne("Entities.Models.Companyy", "Companyy")
                         .WithMany("Advertisements")
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entities.Models.HotelPhoto", b =>
-                {
-                    b.HasOne("Entities.Models.Hotel", "Hotel")
-                        .WithMany("Image")
-                        .HasForeignKey("HotelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyyId");
                 });
 
             modelBuilder.Entity("Entities.Models.ProductPhoto", b =>
                 {
                     b.HasOne("Entities.Models.Advertisement", "Advertisement")
-                        .WithMany("Image")
+                        .WithMany("Photos")
                         .HasForeignKey("AdvertisementId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

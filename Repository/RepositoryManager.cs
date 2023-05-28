@@ -8,15 +8,16 @@ namespace Repository
     {
         private RepositoryContext _repositoryContext;
         private IHotelRepository _hotelRepository;
+
         private IAdvertisementRepository _advertisementRepository;
         private IProductPhotoRepository _productPhotoRepository;
-        private IHotelPhotoRepository _hotelPhotoRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _repositoryContext = repositoryContext;
         }
-        public IHotelRepository Hotel
+        
+        public IHotelRepository User
         {
             get
             {
@@ -25,6 +26,7 @@ namespace Repository
                 return _hotelRepository;
             }
         }
+        
         public IAdvertisementRepository Advertisement
         {
             get
@@ -44,15 +46,7 @@ namespace Repository
                 return _productPhotoRepository;
             }
         }
-        public IHotelPhotoRepository HotelPhoto
-        {
-            get
-            {
-                if (_hotelPhotoRepository == null)
-                    _hotelPhotoRepository = new HotelPhotoRepository(_repositoryContext);
-                return _hotelPhotoRepository;
-            }
-        }
+
 
         public void Save() => _repositoryContext.SaveChanges();
         public Task SaveAsync() => _repositoryContext.SaveChangesAsync();

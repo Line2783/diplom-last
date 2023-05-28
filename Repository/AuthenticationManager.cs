@@ -17,6 +17,7 @@ namespace Repository
     public class AuthenticationManager : IAuthenticationManager
     {
         private readonly UserManager<User> _userManager;
+
         private readonly IConfiguration _configuration;
         private User _user;
 

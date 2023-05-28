@@ -124,41 +124,33 @@ namespace diplom.Controllers
 
             return NoContent(); 
         }
-
-       
-
-
-        // /// <summary>
-        // /// Проверка авторизации пользователя
-        // /// </summary>
-        // /// <returns></returns>
-        // [HttpGet("CheckAuthorization")]
-        // public async Task<IActionResult> CheckAuthorization()
-        // {
-        //     
-        //     if (User.Identity.IsAuthenticated)
-        //     {
-        //         return Ok(User);
-        //     }
-        //
-        //     return BadRequest( new { Error = "You are not authorized!" });
-        // }
         
+        /// <summary>
+        /// Получение информации об авторизированном пользователе
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("CheckAuthorization")]
         public async Task<IActionResult> CheckAuthorization()
         {
-           // var user1 = await _userManager.FindByIdAsync(UserId.ToString());
-           // var u = _userManager.Users.First(p => p.Id = UserId.ToString());
-            var u = await _userManager.Users.FirstAsync(p => p.Id == UserId.ToString());
-
-            
-
-            if (User.Identity.IsAuthenticated)
+            try
             {
-               return Ok(u);
+                if (User.Identity.IsAuthenticated)
+                {
+                    var userId = User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultNameClaimType)?.Value;
+                    if (!string.IsNullOrEmpty(userId))
+                    {
+                        var user = await _userManager.FindByIdAsync(userId);
+
+                        return Ok(user);
+                    }
+                }
+
+                return Unauthorized(new { Error = "You are not authorized!" });
             }
-        
-            return Unauthorized( new { Error = "You are not authorized!" });
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Error = "An error occurred during authorization" });
+            }
         }
         
         

@@ -11,7 +11,7 @@ namespace diplom.Controllers
         protected Guid UserId
         {
             get
-            {
+            {   
                 var value = User.Claims
                     .FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultNameClaimType)?.Value;
                 if (value !=  null)

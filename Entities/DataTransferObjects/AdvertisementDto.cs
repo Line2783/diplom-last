@@ -8,7 +8,7 @@ namespace Entities.DataTransferObjects
 {
     public class AdvertisementDto
     {
-        public Guid Id { get; set; }
+        public Guid AdvertisementId { get; set; }
 
         public string Name { get; set; }
 
@@ -27,29 +27,37 @@ namespace Entities.DataTransferObjects
         public Boolean Rodent { get; set; }
 
         public Boolean Other { get; set; }
-
-      //   public List<Guid> Image { get; set; }
-      // // public List<string> Photos { get; set; }
-      //   public static AdvertisementDto Map(Advertisement model)
-      //   {
-      //       var a= model.Image.Select(p => p.Id).ToList();
-      //       return new AdvertisementDto
-      //       {
-      //           Id = model.Id,
-      //           Name = model.Name,
-      //           City = model.City,
-      //           Address = model.Address,
-      //           Description = model.Description,
-      //           Number = model.Number,
-      //           Cat = model.Cat,
-      //           Dog = model.Dog,
-      //           Rodent = model.Rodent,
-      //           Other = model.Other,
-      //           Image = a,
-      //   
-      //   
-      //       };
-      //   
-      //   }
+        
+        public string? CompanyId { get; set; } //todo
+        
+        
+        public List<string> Photos { get; set; }
+        
+       // public string? PhotoId { get; set; }
+        
+        // public List<ProductPhoto> Image { get; set; }
+      //     public List<Guid> Image { get; set; }
+      // // // public List<string> Photos { get; set; }
+      // public static AdvertisementDto Map(Advertisement model)
+      // {
+      //     var a= model.Image.Select(p => p.Id).ToList();
+      //     return new AdvertisementDto
+      //     {
+      //         Id = model.Id,
+      //         Name = model.Name,
+      //         City = model.City,
+      //         Address = model.Address,
+      //         Description = model.Description,
+      //         Number = model.Number,
+      //         Cat = model.Cat,
+      //         Dog = model.Dog,
+      //         Rodent = model.Rodent,
+      //         Other = model.Other,
+      //         Image = a,
+      //
+      //
+      //     };
+      //
+      // }
     }
 }

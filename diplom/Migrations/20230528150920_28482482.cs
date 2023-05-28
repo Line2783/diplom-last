@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace diplom.Migrations
 {
-    public partial class _143123d : Migration
+    public partial class _28482482 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,17 +49,30 @@ namespace diplom.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Hotels",
+                name: "Companyies",
                 columns: table => new
                 {
-                    HotelId = table.Column<Guid>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    UserName = table.Column<string>(nullable: true),
+                    NormalizedUserName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    NormalizedEmail = table.Column<string>(nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
+                    PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
                     INN = table.Column<string>(maxLength: 12, nullable: false),
-                    Email = table.Column<string>(nullable: false),
                     HotelName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hotels", x => x.HotelId);
+                    table.PrimaryKey("PK_Companyies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,32 +195,18 @@ namespace diplom.Migrations
                     Dog = table.Column<bool>(nullable: false),
                     Rodent = table.Column<bool>(nullable: false),
                     Other = table.Column<bool>(nullable: false),
-                    HotelId = table.Column<Guid>(nullable: false)
+                    CompanyId = table.Column<string>(nullable: true),
+                    CompanyyId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Advertisements", x => x.AdvertisementId);
-                    
-                });
-
-            migrationBuilder.CreateTable(
-                name: "HotelsPhotos",
-                columns: table => new
-                {
-                    PhotoId = table.Column<Guid>(nullable: false),
-                    HotelId = table.Column<Guid>(nullable: false),
-                    Photo = table.Column<byte[]>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HotelsPhotos", x => x.PhotoId);
                     table.ForeignKey(
-                        name: "FK_HotelsPhotos_Hotels_HotelId",
-                        column: x => x.HotelId,
-                        principalTable: "Hotels",
-                        principalColumn: "HotelId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Advertisements_Companyies_CompanyyId",
+                        column: x => x.CompanyyId,
+                        principalTable: "Companyies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -231,36 +230,19 @@ namespace diplom.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Advertisements",
-                columns: new[] { "AdvertisementId", "Address", "Cat", "City", "Description", "Dog", "HotelId", "Name", "Number", "Other", "Rodent" },
-                values: new object[,]
-                {
-                    { new Guid("933e8244-d563-476c-b820-5c6587b6235a"), "Bolshevistskaya street,68", true, "Saransk", "Loves your pats very much", true, new Guid("00000000-0000-0000-0000-000000000000"), "LoveYourPats", "89271478520", true, true },
-                    { new Guid("3e3502fd-1f09-40a9-818a-6f35cd6d43fa"), "Bolshevistskaya street,69", true, "Saransk", "Loves your cats so very much:)", false, new Guid("00000000-0000-0000-0000-000000000000"), "LoveYourCats", "89271478520", false, false }
-                });
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "6b2f5e82-0498-4841-b005-95fe555678d8", "551dd7c2-7131-4758-9978-fe3b66151f2e", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "18e7f470-3f7a-4506-9693-cf27987c2b45", "126b2784-e165-4164-8e1c-f0528f3d9394", "User", "USER" },
-                    { "dcacb154-8ab2-4482-b100-7b82b49dca5a", "ca32b121-f8e0-49ae-98ce-6482ff81187a", "Companyy", "COMPANYY" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Hotels",
-                columns: new[] { "HotelId", "Email", "HotelName", "INN" },
-                values: new object[,]
-                {
-                    { new Guid("099153b0-3e4d-46f4-893e-e90c5589bc84"), "hellopet@mail.ru", "LoveYourPets", "147258963101" },
-                    { new Guid("052678b7-7705-4910-ac55-30e7a224b76d"), "getpet@gmail.com", "WishesPet", "512369874121" }
-                });
+                values: new object[] { "62d86ba0-ec47-486a-9ee4-e76e7518e81a", "b05d615e-435b-48af-9ea7-557578a4d6fd", "Companyy", "COMPANYY" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Advertisements_HotelId",
+                name: "IX_Advertisements_CompanyyId",
                 table: "Advertisements",
-                column: "HotelId");
+                column: "CompanyyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -302,11 +284,6 @@ namespace diplom.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HotelsPhotos_HotelId",
-                table: "HotelsPhotos",
-                column: "HotelId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductPhotos_AdvertisementId",
                 table: "ProductPhotos",
                 column: "AdvertisementId");
@@ -330,9 +307,6 @@ namespace diplom.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "HotelsPhotos");
-
-            migrationBuilder.DropTable(
                 name: "ProductPhotos");
 
             migrationBuilder.DropTable(
@@ -345,7 +319,7 @@ namespace diplom.Migrations
                 name: "Advertisements");
 
             migrationBuilder.DropTable(
-                name: "Hotels");
+                name: "Companyies");
         }
     }
 }

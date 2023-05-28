@@ -4,10 +4,11 @@ namespace Contracts
 {
     public interface IRepositoryManager
     {
-        IHotelRepository Hotel { get; }
+        
         IAdvertisementRepository Advertisement { get; }
         IProductPhotoRepository ProductPhoto { get; }
-        IHotelPhotoRepository HotelPhoto { get; }
+        IHotelRepository User { get; }
+
         void Save();
         Task SaveAsync();
 

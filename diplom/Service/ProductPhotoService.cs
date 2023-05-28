@@ -26,9 +26,9 @@ namespace diplom.Service
             await _repository.SaveRepositoryAsync();
         }
         
-        public async Task<ProductPhoto?> GetFileAsync(Guid imageId)
+        public async Task<ProductPhoto?> GetFileAsync(Guid advertisementId)
         {
-            return await _repository.GetFileAsync(imageId, trackChanges: false);
+            return await _repository.GetFileAsync(advertisementId, trackChanges: false);
         }
     
     }

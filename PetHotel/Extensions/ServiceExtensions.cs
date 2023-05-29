@@ -48,9 +48,10 @@ namespace diplom.Extensions
             services.AddDbContext<RepositoryContext>(opts =>
                 // opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => 
                 //     b.MigrationsAssembly("PetHotel")));
-                opts.UseMySql(configuration.GetConnectionString("sqlConnection"),
-                    new MySqlServerVersion(new Version(8, 0, 27)),
-                    b => b.MigrationsAssembly("PetHotel")));
+                // opts.UseMySql(configuration.GetConnectionString("sqlConnection"),
+                //     new MySqlServerVersion(new Version(8, 0, 27)),
+              //  optionsBuilder.UseSqlite("Data Source=helloapp.db");
+                opts.UseSqlite("Data Source=helloapp.db"));
         
         public static void ConfigureRepositoryManager(this IServiceCollection services)
             =>

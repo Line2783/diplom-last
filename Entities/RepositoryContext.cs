@@ -10,13 +10,15 @@ namespace Entities
         public RepositoryContext(DbContextOptions options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
-            
+           
             // modelBuilder.ApplyConfiguration(new HotelConfiguration());
             // modelBuilder.ApplyConfiguration(new AdvertisementConfiguration());
 

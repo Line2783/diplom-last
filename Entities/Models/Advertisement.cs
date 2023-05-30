@@ -25,7 +25,7 @@ namespace Entities.Models
             public string Address { get; set; }
 
             [Required(ErrorMessage = "Advertisement description is a required field.")]
-            [MaxLength(150, ErrorMessage = "Maximum length for the Address is 60 character")]
+            [MaxLength(1000, ErrorMessage = "Maximum length for the Address is 60 character")]
             public string Description { get; set; }
 
             [Required(ErrorMessage = "Advertisement number is a required field.")]

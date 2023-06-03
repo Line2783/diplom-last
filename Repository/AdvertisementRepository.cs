@@ -19,11 +19,6 @@ namespace Repository
         {
         }
         
-        public async Task<IEnumerable<Advertisement>> GetAdvertisementsAsync(Guid advertisementId,
-            bool trackChanges)=>
-            await FindByCondition(e => e.AdvertisementId.Equals(advertisementId), trackChanges)
-                .OrderBy(e => e.Name).ToListAsync();
-        
         public async Task<IEnumerable<Advertisement>> GetAllAdvertisementsAsync(bool trackChanges)
             => await FindAll(trackChanges)
                 .OrderBy(c => c.Name)

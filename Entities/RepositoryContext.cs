@@ -10,6 +10,8 @@ namespace Entities
         public RepositoryContext(DbContextOptions options)
             : base(options)
         {
+            Database.EnsureCreated();
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,11 +27,5 @@ namespace Entities
         public DbSet<User> Users{ get; set; }
         public DbSet<Advertisement> Advertisements { get; set; }
         public DbSet<ProductPhoto> ProductPhotos { get; set; }
-
-
-
-
-
-
     }
 }

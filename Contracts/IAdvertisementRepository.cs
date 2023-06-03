@@ -14,7 +14,6 @@ namespace Contracts
         void CreateAdvertisement(Advertisement advertisement);
         void DeleteAdvertisement(Advertisement advertisement);
         
-        Task<IEnumerable<Advertisement>> GetAdvertisementsAsync(Guid hotelId,  bool trackChanges);
         Task<IEnumerable<Advertisement>> GetAdvertisementsForCompanyAsync(string companyId, bool trackChanges);    
     }
 }

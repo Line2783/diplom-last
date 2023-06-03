@@ -8,8 +8,7 @@ namespace Entities.Models
 {
     public class Advertisement
     {
-        
-            [Column("AdvertisementId")]
+        [Column("AdvertisementId")]
             public Guid AdvertisementId { get; set; }
 
             [Required(ErrorMessage = "Advertisement name is a required field.")]
@@ -44,11 +43,9 @@ namespace Entities.Models
             public bool Other { get; set; }
             
             public ICollection<ProductPhoto> Photos { get; set; }
-
             
             public string? CompanyId { get; set; }
-            public virtual Companyy Companyy { get; set; } 
-            
+            public virtual Companyy Companyy { get; set; }
     }
 }
 

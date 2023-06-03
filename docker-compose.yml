@@ -3,13 +3,19 @@ version: '3.4'
 services:
   diplom:
     image: ${DOCKER_REGISTRY-}diplom
-    restart: always
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-    ports:
-      - "80"
-      - "443"
     build:
       context: .
       dockerfile: diplom/Dockerfile
+    ports:
+          - "8080:80"
+    depends_on:
+          - db
+
+  db:
+        image: "mcr.microsoft.com/mssql/server:2022-latest"
+        ports:
+          - "1433:1433"
+
+        environment:
+            SA_PASSWORD: "Shatrov!"
+            ACCEPT_EULA: "Y"

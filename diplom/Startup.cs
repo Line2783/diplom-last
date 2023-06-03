@@ -62,12 +62,8 @@ namespace diplom
             services.ConfigureJWT(Configuration);
             services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             services.ConfigureSwagger();
-           
             services.AddScoped<ValidateAdvertisementExistsAttribute>();
-            
-            services.AddScoped <IDataShaper<AdvertisementDto>, DataShaper<AdvertisementDto>>(); 
-
- 
+            services.AddScoped <IDataShaper<AdvertisementDto>, DataShaper<AdvertisementDto>>();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger)
@@ -80,7 +76,6 @@ namespace diplom
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             
-            
             app.UseCors("CorsPolicy");
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
@@ -88,11 +83,8 @@ namespace diplom
             });
 
             app.UseRouting();
-            
             app.UseAuthentication();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -111,7 +103,6 @@ namespace diplom
             {
                 CreateMap<UserForRegistrationDto, User>();
                 CreateMap<CompanyyForRegistrationDto, User>();
-                CreateMap<Companyy, HotelDto>();
                 CreateMap<Advertisement, AdvertisementDto>();
                 CreateMap<AdvertisementForCreationDto, Advertisement>();
                 CreateMap<AdvertisementForUpdateDto, Advertisement>();

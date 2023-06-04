@@ -67,11 +67,31 @@ namespace diplom.Controllers
             return Ok(userDto);
         }
         /// <summary>
+        /// Получение информации авторизованной компании
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetAutorizeCompany"), Authorize(Roles = "Companyy")]
+        public async Task<IActionResult> GetCurrentCompany()
+        {
+            Guid userId = UserId;
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var userDto = _mapper.Map<CompanyDto>(user);
+
+            return Ok(userDto);
+        } 
+        
+        /// <summary>
         /// Редактирование профиля авторизированной компании 
         /// </summary>
         /// <param name="companyForUpdate"></param>
         /// <returns></returns>
-        [HttpPut("profile")] // todo
+        [HttpPut("profile"), Authorize(Roles = "Companyy")] // todo
         public async Task<IActionResult> UpdateProfile([FromBody] CompanyForUpdateDto companyForUpdate)
         {
             Guid userId = UserId;
@@ -93,5 +113,26 @@ namespace diplom.Controllers
             return NoContent();
         }
         
+        /// <summary>
+        /// Получение всех объявлений авторизированной компании
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetAutorizeAdv"), Authorize(Roles = "Companyy")] // work todo
+        public async Task<IActionResult> GetAllAdvertisementsForCompany()
+        {
+            Guid companyId = UserId;
+            var advertisements = await _repository.Advertisement.GetAdvertisementsForCompanyAsync(companyId.ToString(), trackChanges: false);
+            
+            var advetrisemntsDto = _mapper.Map<IEnumerable<AdvertisementDto>>(advertisements);
+
+            foreach (var item in advetrisemntsDto)
+            {
+                var photos =
+                    await    _repository.ProductPhoto.GetAllProductPhotoAsync(item.AdvertisementId, trackChanges: false);
+                item.Photos = photos.Select(x=>x.Id.ToString()).ToList();
+            }   
+
+            return Ok(advetrisemntsDto);
+        }
     }
 }

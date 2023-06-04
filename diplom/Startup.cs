@@ -112,6 +112,7 @@ namespace diplom
                 CreateMap<CompanyForUpdateDto, User>();
                 CreateMap<ProductPhoto, AdvertisementDto>().ReverseMap();
                 CreateMap<ProductPhoto, Advertisement>().ReverseMap();
+                CreateMap<User, AuthUserDto>();
 
             }
         }

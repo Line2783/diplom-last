@@ -141,7 +141,9 @@ namespace diplom.Controllers
                     {
                         var user = await _userManager.FindByIdAsync(userId);
 
-                        return Ok(user);
+                        var userDto = _mapper.Map<AuthUserDto>(user);
+                        
+                        return Ok(userDto);
                     }
                 }
 

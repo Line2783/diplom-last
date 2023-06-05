@@ -86,6 +86,7 @@ namespace diplom.Controllers
             await _userManager.AddToRolesAsync(user, companyyForRegistration.Roles);
             return StatusCode(201);
         }
+
         /// <summary>
         /// Авторизация
         /// </summary>
@@ -96,14 +97,13 @@ namespace diplom.Controllers
         public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
         {
             var userRoles = await _authManager.ValidateUser(user);
-            if (userRoles == null)
-            {
-                _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wrong Email or password.");
-                return Unauthorized();
-            }
-            
+                if (userRoles == null)
+                {
+                    _logger.LogWarn($"{nameof(Authenticate)}: Authentication failed. Wrong Email or password.");
+                    return Unauthorized();
+                }
 
-            return Ok(new { Token = await _authManager.CreateToken(), Role = userRoles}); // TODO
+                return Ok(new { Token = await _authManager.CreateToken(), Role = userRoles }); // TODO
         }
 
         /// <summary>

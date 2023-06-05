@@ -29,7 +29,12 @@ namespace Repository
         }
         public async Task<IList<string>?> ValidateUser(UserForAuthenticationDto userForAuth)
         {
+            
             _user = await _userManager.FindByEmailAsync(userForAuth.Email);
+            if (_user == null)
+            {
+                return null;
+            }
             var userRoles = await  _userManager.GetRolesAsync(_user);
             
             if (_user != null && await _userManager.CheckPasswordAsync(_user,

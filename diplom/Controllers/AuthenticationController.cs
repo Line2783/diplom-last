@@ -35,7 +35,7 @@ namespace diplom.Controllers
             _authManager = authManager;
         }
         /// <summary>
-        /// Регистрация пользователя
+        /// Регистрация пользователя (roles - User)
         /// </summary>
         /// <param name="userForRegistration"></param>
         /// <returns></returns>
@@ -61,7 +61,7 @@ namespace diplom.Controllers
             return StatusCode(201);
         }
         /// <summary>
-        /// Регистрация компании
+        /// Регистрация компании (roles - Companyy)
         /// </summary>
         /// <param name="companyyForRegistration"></param>
         /// <returns></returns>

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace diplom.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230528150920_28482482")]
-    partial class _28482482
+    [Migration("20230608083631_g2323")]
+    partial class g2323
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,11 +49,16 @@ namespace diplom.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<bool>("Dog")
                         .HasColumnType("bit");
+
+                    b.Property<string>("INN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(12)")
+                        .HasMaxLength(12);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -262,15 +267,15 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6b2f5e82-0498-4841-b005-95fe555678d8",
-                            ConcurrencyStamp = "551dd7c2-7131-4758-9978-fe3b66151f2e",
+                            Id = "893c95a4-c558-4d2c-9e5d-e4b9116a649f",
+                            ConcurrencyStamp = "82b35abc-b932-40d4-8c76-9b4dcb213970",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "62d86ba0-ec47-486a-9ee4-e76e7518e81a",
-                            ConcurrencyStamp = "b05d615e-435b-48af-9ea7-557578a4d6fd",
+                            Id = "106a55bd-b90c-4f79-bab2-387608235805",
+                            ConcurrencyStamp = "28762623-9173-4ab1-9174-70afcaebdade",
                             Name = "Companyy",
                             NormalizedName = "COMPANYY"
                         });

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace diplom.Migrations
 {
-    public partial class _28482482 : Migration
+    public partial class g2323 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -189,7 +189,8 @@ namespace diplom.Migrations
                     Name = table.Column<string>(maxLength: 60, nullable: false),
                     City = table.Column<string>(maxLength: 60, nullable: false),
                     Address = table.Column<string>(maxLength: 60, nullable: false),
-                    Description = table.Column<string>(maxLength: 150, nullable: false),
+                    INN = table.Column<string>(maxLength: 12, nullable: false),
+                    Description = table.Column<string>(maxLength: 1000, nullable: false),
                     Number = table.Column<string>(nullable: false),
                     Cat = table.Column<bool>(nullable: false),
                     Dog = table.Column<bool>(nullable: false),
@@ -232,12 +233,12 @@ namespace diplom.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "6b2f5e82-0498-4841-b005-95fe555678d8", "551dd7c2-7131-4758-9978-fe3b66151f2e", "User", "USER" });
+                values: new object[] { "893c95a4-c558-4d2c-9e5d-e4b9116a649f", "82b35abc-b932-40d4-8c76-9b4dcb213970", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "62d86ba0-ec47-486a-9ee4-e76e7518e81a", "b05d615e-435b-48af-9ea7-557578a4d6fd", "Companyy", "COMPANYY" });
+                values: new object[] { "106a55bd-b90c-4f79-bab2-387608235805", "28762623-9173-4ab1-9174-70afcaebdade", "Companyy", "COMPANYY" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Advertisements_CompanyyId",

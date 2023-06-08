@@ -16,8 +16,6 @@ namespace Entities.DataTransferObjects
 
         public string Address { get; set; }
         
-        public string INN { get; set; }
-
         public string Description { get; set; }
 
         public string Number { get; set; }

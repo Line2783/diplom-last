@@ -53,11 +53,6 @@ namespace diplom.Migrations
                     b.Property<bool>("Dog")
                         .HasColumnType("bit");
 
-                    b.Property<string>("INN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(12)")
-                        .HasMaxLength(12);
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(60)")
@@ -265,15 +260,15 @@ namespace diplom.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "893c95a4-c558-4d2c-9e5d-e4b9116a649f",
-                            ConcurrencyStamp = "82b35abc-b932-40d4-8c76-9b4dcb213970",
+                            Id = "9b9185be-7f69-49db-bb21-dbb10d4c249c",
+                            ConcurrencyStamp = "0746b693-4ef1-450b-acf1-786e6dede5f5",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "106a55bd-b90c-4f79-bab2-387608235805",
-                            ConcurrencyStamp = "28762623-9173-4ab1-9174-70afcaebdade",
+                            Id = "03e347b7-ed29-4792-945d-073cab17d82c",
+                            ConcurrencyStamp = "1d4950b6-1289-44d4-bb94-3f7063bc08d8",
                             Name = "Companyy",
                             NormalizedName = "COMPANYY"
                         });

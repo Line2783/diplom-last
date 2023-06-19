@@ -13,5 +13,7 @@ namespace Contracts
             Task<ProductPhoto?> GetFileAsync(Guid imageId, bool trackChanges);
             Task<ICollection<ProductPhoto>> GetAllProductPhotoAsync(Guid productId, bool trackChanges);
             Task SaveRepositoryAsync();
+            void DeletePhoto(ProductPhoto productPhoto);
+
     }
 }

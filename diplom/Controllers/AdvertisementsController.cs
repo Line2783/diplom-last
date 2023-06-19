@@ -254,8 +254,23 @@ namespace diplom.Controllers
             var stream = new MemoryStream(file.Photo);
             return File(stream, "application/octet-stream", $"{file.Name}");
         }
-        
-        
+        /// <summary>
+        /// Удаление фотографии по imageId
+        /// </summary>
+        /// <param name="imageId"></param>
+        /// <exception cref="Exception"></exception>
+        [HttpDelete("/photo/{imageId}"), Authorize(Roles = "Companyy")]
+        public async Task<IActionResult> DeleteProductPhoto(Guid imageId)
+        {
+            var photoToDelete = await _repository.ProductPhoto.GetFileAsync(imageId, true);
+            if (photoToDelete == null)
+            {
+                throw new Exception("Фотография не найдена.");
+            }
+            _repository.ProductPhoto.DeletePhoto(photoToDelete);
+            await _repository.SaveAsync();
+            return NoContent();
+        }
         
         
         

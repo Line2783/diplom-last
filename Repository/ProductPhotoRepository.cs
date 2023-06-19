@@ -25,7 +25,13 @@ namespace Repository
             await FindAll(trackChanges).OrderBy(o => o.AdvertisementId == advertisementId)
                 .Where(x => x.AdvertisementId == advertisementId)
                 .ToListAsync();
+        
+        public void DeletePhoto(ProductPhoto productPhoto)
+        {
+            Delete(productPhoto);
+        }
 
         public async Task SaveRepositoryAsync() => await SaveAsync();
+        
     }
 }

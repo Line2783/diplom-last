@@ -10,5 +10,6 @@ namespace Contracts
         Task<IEnumerable<ProductPhoto>> GetAllProductPhotoByIdAsync(Guid photoId);
         Task AddPhoto(ProductPhoto productPhoto);
         Task<ProductPhoto?> GetFileAsync(Guid imageId);
+        
     }
 }

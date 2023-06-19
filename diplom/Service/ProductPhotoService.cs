@@ -30,6 +30,8 @@ namespace diplom.Service
         {
             return await _repository.GetFileAsync(advertisementId, trackChanges: false);
         }
+        
+        
     
     }
 }
